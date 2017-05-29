@@ -2,7 +2,7 @@ var Player = function(settings) {
 
     // Settings
     var playerElement = null;
-    var bullets = [];
+    var playerHP = 100;             //Default player hit points
 
     // variables for weapon power meter
     var powerCount = 0;             //counter to measure power of projectile
@@ -10,7 +10,7 @@ var Player = function(settings) {
     var ceiling = 100;              //Max power value
     var increase = true;            //Check if power is increasing
 
-
+    // Collision detection between object and window boundaries
     function wall() {
 
       var playerRect = playerElement.getBoundingClientRect();
@@ -34,6 +34,13 @@ var Player = function(settings) {
       }
     }
 
+    // set up boundaries for player for the sake of collision detection
+    function playerWall() {
+
+      var playerRect = playerElement.getBoundingClientRect();
+      
+    }
+
 
     // Move the player around manually
     function move(interactions){
@@ -46,6 +53,14 @@ var Player = function(settings) {
         playerElement.style.left = parseInt(playerElement.style.left)+8+"px";
       }
 
+      if(settings.walls){
+        wall();
+      }
+    }
+
+
+    // Fire weapon manually via pressing space bar
+    function fireWeapon(interactions){
       if(interactions.space){
 
       //increase the power from 0 to 100 and decrease it to 100 to 0 repeatedly
@@ -63,36 +78,31 @@ var Player = function(settings) {
           {increase = true;}
         }
         console.log(powerCount);
-  }
+      }
 
-
-
+      //When spacebar is released, reset the powerCount to 0
       if(interactions.space === false) {
 
           powerCount = 0;
 
       }
-
-      if(settings.walls){
-        wall();
-      }
     }
 
-    function create() {
+    function createPlayer() {
         // Create the object asset
+        playerElement = document.getElementById('player');
+        playerElement.style.top = '300px';
+        playerElement.style.left = '0px';
+        playerElement.style.height = '100px';
     }
 
     function init(){
-      //
-       create();
-      playerElement = document.getElementById('player');
-      playerElement.style.top = '300px';
-      playerElement.style.left = '0px';
-      playerElement.style.height = '100px';
+      createPlayer();
     }
 
     this.render = function(interactions){
       move(interactions);
+      fireWeapon(interactions);
     }
 
     init();

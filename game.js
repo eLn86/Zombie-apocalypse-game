@@ -3,15 +3,19 @@ var Game = function() {
     // Game settings
     var settings = {};                     // Containes all game settings
     settings.playerSpeed = 8;              // The speed of the player when moving
-    settings.zombieSpeed = 8;              // The speed of the zombie
-    settings.walls = true;                 // The ball can not go outside the screen
-    settings.automatic = false;            // The ball will move by itself
+    settings.monsterSpeed = 5;             // The speed of the zombie
+    settings.walls = true;                 // The game objects cannot go outside the set boundaries of the screen
+    settings.automatic = true;            // The object will move by itself
     settings.godmode = false;              // Debug mode
 
     // World settings
     var gameObjects = [];                  // All game objects
     var player1 = new Player(settings);    // The player
-    gameObjects[0] = player1;                   //
+    var monster1 = new Monster(settings);  // First monster
+    var score1 = new Scoreboard(settings); // Scoreboard
+    gameObjects[0] = player1;              // Add player to the game objects array
+    gameObjects[1] = score1;               // Add scoreboard
+    gameObjects[2] = monster1;             // Add first monster to the game objects array
     var frame = 0;                         // Frames since the start of the game
 
     // Interactions
