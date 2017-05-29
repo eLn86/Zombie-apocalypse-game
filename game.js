@@ -8,23 +8,19 @@ var Game = function() {
     settings.walls = true;                 // The game objects cannot go outside the set boundaries of the screen
     settings.automatic = true;             // The object will move by itself
     settings.godmode = false;              // Debug mode
-    settings.id = 1;
+    settings.id = 1;                       // Monster ID
 
 
     // World settings
     var gameObjects = [];                  // All game objects
     var player1 = new Player(settings);    // The player
-    var monster1 = new Monster(settings);  // First monster
-    var monster2 = new Monster(settings);  // Second monster
-    var monster3 = new Monster(settings);  // Third monster
     var score1 = new Scoreboard(settings); // Scoreboard
     var weapon1 = new Weapon(settings);    // first weapon
+    //var monster1 = new Monster(settings);  // first monster
     gameObjects[0] = player1;              // Add player to the game objects array
     gameObjects[1] = score1;               // Add scoreboard to the game objects array
     gameObjects[2] = weapon1;              // Add weapon to the game objects array
-    gameObjects[3] = monster1;             // Add first monster to the game objects array
-    gameObjects[4] = monster2;             // Add Second monster to the game objects array
-    gameObjects[5] = monster3;             // Add third monster to the game objects array
+    //gameObjects[3] = monster1;             // Add monster to the game objects array
     var frame = 0;                         // Frames since the start of the game
     var timer = 0;                         // Seconds passed since the start of game
 
@@ -121,7 +117,6 @@ var Game = function() {
     // Startup the game
     function init(){
       setupEvents();
-
   }
 
     function spawnMonster() {
@@ -130,7 +125,7 @@ var Game = function() {
 
 
     // The render function. It will be called 60/sec
-    function render(){
+    this.render = function(){
         for(var i=0; i < gameObjects.length; i++){
             gameObjects[i].render(interactions);
           }
@@ -143,6 +138,7 @@ var Game = function() {
       timer = frame/60;
     }
 
+    var self = this; // Add this line
     window.requestAnimFrame = (function(){
       return  window.requestAnimationFrame       ||
               window.webkitRequestAnimationFrame ||
@@ -154,7 +150,7 @@ var Game = function() {
 
             (function animloop(){
               requestAnimFrame(animloop);
-              render();
+              self.render();;
             })();
 
             init();
