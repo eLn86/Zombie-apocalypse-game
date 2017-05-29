@@ -26,27 +26,39 @@
       border-radius: 50%;
     }
 
-    #power {
-      height: 100px;
+    #scoreboard {
+      height: 50px;
       width: 200px;
       background-color: grey;
       position: absolute;
       top: 50px;
       left: 50px;
+      text-align: center;
+      margin: 0 auto;
+    }
 
+    #weapon {
+      height: 50px;
+      width: 50px;
+      background-color: green;
+      position: absolute;
+      top: 50px;
+      left: 50px;
     }
 
   </style>
 </head>
 
 <body>
-  <div id="power"></div>
+  <div id="scoreboard"></div>
   <div id="player"></div>
+  <div id="weapon"></div>
   <div id="monster"></div>
 
   <script type="text/javascript" src="jquery.min.js"></script>
   <script type="text/javascript" src="scoreboard.js"></script>
   <script type="text/javascript" src="player.js"></script>
+  <script type="text/javascript" src="weapons.js"></script>
   <script type="text/javascript" src="monsters.js"></script>
   <script type="text/javascript" src="game.js"></script>
 

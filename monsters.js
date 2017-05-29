@@ -31,7 +31,7 @@ var Monster = function(settings) {
   //Move the monster from right to left automatically
   function move(interactions) {
     if(settings.automatic) {
-      monsterElement.style.left = parseInt(monsterElement.style.left)-1+"px";
+      monsterElement.style.left = parseInt(monsterElement.style.left)-settings.monsterSpeed+"px";
     }
 
     if(settings.walls) {

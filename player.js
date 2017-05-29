@@ -4,12 +4,6 @@ var Player = function(settings) {
     var playerElement = null;
     var playerHP = 100;             //Default player hit points
 
-    // variables for weapon power meter
-    var powerCount = 0;             //counter to measure power of projectile
-    var x = 0.5;                    //incremental for power
-    var ceiling = 100;              //Max power value
-    var increase = true;            //Check if power is increasing
-
     // Collision detection between object and window boundaries
     function wall() {
 
@@ -37,8 +31,8 @@ var Player = function(settings) {
     // set up boundaries for player for the sake of collision detection
     function playerWall() {
 
-      var playerRect = playerElement.getBoundingClientRect();
-      
+      playerRect = playerElement.getBoundingClientRect();
+
     }
 
 
@@ -46,45 +40,15 @@ var Player = function(settings) {
     function move(interactions){
 
       if(interactions.left){
-        playerElement.style.left = parseInt(playerElement.style.left)-8+"px";
+        playerElement.style.left = parseInt(playerElement.style.left)-settings.playerSpeed+"px";
       }
 
       if(interactions.right){
-        playerElement.style.left = parseInt(playerElement.style.left)+8+"px";
+        playerElement.style.left = parseInt(playerElement.style.left)+settings.playerSpeed+"px";
       }
 
       if(settings.walls){
         wall();
-      }
-    }
-
-
-    // Fire weapon manually via pressing space bar
-    function fireWeapon(interactions){
-      if(interactions.space){
-
-      //increase the power from 0 to 100 and decrease it to 100 to 0 repeatedly
-      if (increase == true && powerCount <= ceiling) {
-          powerCount += x;
-          if (powerCount == ceiling)
-          {increase = false;}
-        }
-
-      else {
-          increase = false;
-          powerCount -= x;
-
-          if (powerCount == 0)
-          {increase = true;}
-        }
-        console.log(powerCount);
-      }
-
-      //When spacebar is released, reset the powerCount to 0
-      if(interactions.space === false) {
-
-          powerCount = 0;
-
       }
     }
 
@@ -102,7 +66,6 @@ var Player = function(settings) {
 
     this.render = function(interactions){
       move(interactions);
-      fireWeapon(interactions);
     }
 
     init();

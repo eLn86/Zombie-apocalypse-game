@@ -1,5 +1,6 @@
 var Scoreboard = function(settings) {
   var scoreElement = null;
+  var currentScore = 0;
 
   function wall() {
 
@@ -24,6 +25,7 @@ var Scoreboard = function(settings) {
     }
   }
 
+  //don't move the scoreboard but if window is scaled, it moves accordingly
   function move(interactions){
 
     if(settings.walls){
@@ -33,10 +35,11 @@ var Scoreboard = function(settings) {
 
   function createScoreboard() {
     // Create the object asset
-    scoreElement = document.getElementById('power');
+    scoreElement = document.getElementById('scoreboard');
     scoreElement.style.top = '0px';
     scoreElement.style.left = '600px';
-    scoreElement.style.height = '100px';
+    scoreElement.style.height = '30px';
+    scoreElement.innerHTML = currentScore;
   }
 
   function init(){
