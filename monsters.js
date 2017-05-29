@@ -3,6 +3,7 @@ var Monster = function(settings) {
   // Settings
   var monsterElement = null;
   var monsterHP = 100;            //Default monster hit points
+  this.id = settings.id;
 
   // Collision detection between object and window boundaries
   function wall() {
@@ -23,15 +24,16 @@ var Monster = function(settings) {
         monsterElement.style.left = '0px';
     }
 
-    if(monsterRect.right > w){
-        monsterElement.style.left = ( w - monsterRect.width) + 'px' ;
-    }
+    // if(monsterRect.right > w){
+    //     monsterElement.style.left = ( w - monsterRect.width) + 'px' ;
+    // }
   }
 
   //Move the monster from right to left automatically
-  function move(interactions) {
+  function move() {
     if(settings.automatic) {
-      monsterElement.style.left = parseInt(monsterElement.style.left)-settings.monsterSpeed+"px";
+        monsterElement.style.left = parseInt(monsterElement.style.left)-settings.monsterSpeed+"px";
+        //monsterElement.style.left = parseInt(monsterElement.style.left)-Math.random()*50+"px";
     }
 
     if(settings.walls) {
@@ -43,20 +45,25 @@ var Monster = function(settings) {
 
   function createMonster() {
     // Create the object asset
-    monsterElement = document.getElementById('monster');
-    monsterElement.style.top = '300px';
+    if ($('monster #'+this.id)) {console.log("id exists," + this.id); settings.id++; this.id=settings.id}
+    $('body').append("<div id='" + this.id + "' class='monster'></div>")
+    //style='top:300px;left:1200px;height:100px'
+    monsterElement = document.getElementById((this.id).toString());
+    console.log(monsterElement)
+    monsterElement.style.top = '300px'
     monsterElement.style.left = '1200px';
     monsterElement.style.height = '100px';
   }
 
   function init() {
   //
-  createMonster();
+      createMonster();
+
 
   }
 
   this.render = function(interactions){
-  move(interactions);
+    move();
   }
 
 init();
