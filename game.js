@@ -3,13 +3,14 @@ var Game = function() {
     // Game settings
     var settings = {};                     // Containes all game settings
     settings.playerSpeed = 8;              // The speed of the player when moving
-    settings.monsterSpeed = 0.5;             // The speed of the zombie
+    settings.monsterSpeed = 0.5;           // The speed of the zombie
     settings.aimUpDown = 4;                // The speed of which weapon aim moves up or down
     settings.walls = true;                 // The game objects cannot go outside the set boundaries of the screen
     settings.automatic = true;             // The object will move by itself
     settings.godmode = false;              // Debug mode
     settings.id = 1;                       // Monster ID
-
+    settings.playerBB = {x: 5, y: 5, width: 50, height: 50}; // Bounding Box around player
+    settings.monsterBB = {x: 20, y: 10, width: 10, height: 10}; // Bounding Box around monster
 
     // World settings
     var gameObjects = [];                  // All game objects
@@ -133,6 +134,8 @@ var Game = function() {
       if(timer % 2 === 0) {
         spawnMonster();
       }
+
+      
 
       frame++;
       timer = frame/60;

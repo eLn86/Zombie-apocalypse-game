@@ -26,12 +26,26 @@ var Player = function(settings) {
       if(playerRect.right > w){
           playerElement.style.left = ( w - playerRect.width) + 'px' ;
       }
+
     }
 
-    // set up boundaries for player for the sake of collision detection
+    // set up bounding box for player for the sake of collision detection
     function playerWall() {
 
-      playerRect = playerElement.getBoundingClientRect();
+//      setTimeout(function(){
+        var playerRect = null;
+        var monsterRect = document.getElementsByClassName("monster");
+        var monsterStats = [];
+
+          for(var i=0;i<monsterRect.length;i++) {
+          playerRect = playerElement.getBoundingClientRect();
+          monsterStats[0] = monsterRect[0].getBoundingClientRect();
+          if(monsterStats[0].left === (playerRect.left + playerRect.width)){
+             monsterStats[0].style.left = playerRect.style.right + "px";
+          }
+        }
+//      }, 2000);
+
 
     }
 
@@ -49,7 +63,9 @@ var Player = function(settings) {
 
       if(settings.walls){
         wall();
+        playerWall();
       }
+
     }
 
     function createPlayer() {

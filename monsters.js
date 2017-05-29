@@ -27,6 +27,7 @@ var Monster = function(settings) {
     if(monsterRect.right > w){
         monsterElement.style.left = ( w - monsterRect.width) + 'px' ;
     }
+
   }
 
   //Move the monster from right to left automatically
@@ -39,6 +40,7 @@ var Monster = function(settings) {
     if(settings.walls) {
     wall();
     }
+
 
 }
 
