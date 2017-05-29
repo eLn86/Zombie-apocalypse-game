@@ -121,17 +121,26 @@ var Game = function() {
     // Startup the game
     function init(){
       setupEvents();
+
+  }
+
+    function spawnMonster() {
+      gameObjects.push(new Monster(settings));
     }
+
 
     // The render function. It will be called 60/sec
     function render(){
+        for(var i=0; i < gameObjects.length; i++){
+            gameObjects[i].render(interactions);
+          }
+
+      if(timer % 2 === 0) {
+        spawnMonster();
+      }
 
       frame++;
       timer = frame/60;
-        for(var i=0; i < gameObjects.length; i++){
-          gameObjects[i].render(interactions);
-        }
-
     }
 
     window.requestAnimFrame = (function(){

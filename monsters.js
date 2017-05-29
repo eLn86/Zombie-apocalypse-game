@@ -58,8 +58,6 @@ var Monster = function(settings) {
   function init() {
   //
       createMonster();
-
-
   }
 
   this.render = function(interactions){
