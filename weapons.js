@@ -11,10 +11,8 @@ var Weapon = function(settings) {
   var increase = true;            //Check if power is increasing
 
   // variables for weapon aim arc
-  var v = 10;
-  var d = 45;
-  var offSetX = Math.sin(d) * v;               //offset for X coords
-  var offSetY = Math.cos(d) * v;               //offset for Y coords
+  var angle = Math.PI/2;
+
 
   function wall() {
 
@@ -39,34 +37,34 @@ var Weapon = function(settings) {
     }
   }
 
-  function weaponBoundary() {
-
-    var weaponObj = null;
-    var playerObj = null;
-    weaponObj = weaponElement.getBoundingClientRect();
-    playerObj = playerElement.getBoundingClientRect();
-
-    //collision detection for top of weapon
-    if(weaponObj.top < (playerObj.top - 60)) {
-      weaponElement.style.top = (playerObj.top - 60) + 'px';
-    }
-
-    //collision detection for left of weapon
-    if(weaponObj.left < (playerObj.left + 50)) {
-      weaponElement.style.left = (playerObj.left + 50) + 'px';
-    }
-
-    //collision detection for bottom of weapon
-    if((weaponObj.top-weaponObj.height) > (playerObj.top - (playerObj.height/4))) {
-      weaponElement.style.top = (playerObj.top - (playerObj.height/4)) + weaponObj.height + 'px';
-    }
-
-     //collision detection for right of weapon
-     if((weaponObj.left + weaponObj.width) > ((playerObj.left + playerObj.width) + 50)) {
-       weaponElement.style.left = ((playerObj.left + playerObj.width) + 50) + 'px';
-     }
-
-  }
+  // function weaponBoundary() {
+  //
+  //   var weaponObj = null;
+  //   var playerObj = null;
+  //   weaponObj = weaponElement.getBoundingClientRect();
+  //   playerObj = playerElement.getBoundingClientRect();
+  //
+  //   //collision detection for top of weapon
+  //   if(weaponObj.top < (playerObj.top - 60)) {
+  //     weaponElement.style.top = (playerObj.top - 60) + 'px';
+  //   }
+  //
+  //   //collision detection for left of weapon
+  //   if(weaponObj.left < (playerObj.left + 50)) {
+  //     weaponElement.style.left = (playerObj.left + 50) + 'px';
+  //   }
+  //
+  //   //collision detection for bottom of weapon
+  //   if((weaponObj.top-weaponObj.height) > (playerObj.top - (playerObj.height/4))) {
+  //     weaponElement.style.top = (playerObj.top - (playerObj.height/4)) + weaponObj.height + 'px';
+  //   }
+  //
+  //    //collision detection for right of weapon
+  //    if((weaponObj.left + weaponObj.width) > ((playerObj.left + playerObj.width) + 50)) {
+  //      weaponElement.style.left = ((playerObj.left + playerObj.width) + 50) + 'px';
+  //    }
+  //
+  // }
 
   // Move the weapon together with the player manually
   function move(interactions){
@@ -80,20 +78,50 @@ var Weapon = function(settings) {
     }
 
     if(interactions.up){
-      if(weaponElement.style.left >= parseInt(weaponElement.style.left)-offSetY+"px") {
-      weaponElement.style.top = parseInt(weaponElement.style.top)-settings.aimUpDown+"px";
-      weaponElement.style.left = parseInt(weaponElement.style.left)-offSetY+"px";
+      //interactions.down = true;
+      var playerElement = document.getElementById('player');
+      var playerObj = playerElement.getBoundingClientRect();
+      var weapElement = document.getElementById('weapon');
+      var radius = (playerObj.width/2) + 60;
+      angle += 0.04;
+      var top = (radius*Math.sin(angle));
+      var left = (radius*Math.cos(angle));
+      weapElement.style.left = (playerObj.left + (playerObj.width/2)) + left + 'px';
+      weapElement.style.top = (playerObj.top + (playerObj.height/2)) - top + 'px';
+
+      if(angle > Math.PI/2) {
+        weapElement.style.left = playerObj.left + 50 + 'px';
+        weapElement.style.top = playerObj.top - 60 + 'px';
+        angle = Math.PI/2;
       }
     }
 
     if(interactions.down){
-      weaponElement.style.top = parseInt(weaponElement.style.top)+settings.aimUpDown+"px";
-      weaponElement.style.left = parseInt(weaponElement.style.left)+offSetX+"px";
+      //interactions.up = true;
+      var playerElement = document.getElementById('player');
+      var playerObj = playerElement.getBoundingClientRect();
+      var weapElement = document.getElementById('weapon');
+      var radius = (playerObj.width/2) + 60;
+      angle -= 0.04;
+      if(angle < 0.2) {
+        weapElement.style.left = playerObj.width/2 + radius + 'px';
+        weapElement.style.top = playerObj.top + (playerObj.height/2) + 'px';
+        angle = 0.2;
+
+      }
+
+
+      var top = (radius*Math.sin(angle));
+      var left = (radius*Math.cos(angle));
+      weapElement.style.left = (playerObj.left + (playerObj.width/2)) + left + 'px';
+      weapElement.style.top = (playerObj.top + (playerObj.height/2)) - top + 'px';
+
+
     }
 
     if(settings.walls){
       wall();
-      weaponBoundary();
+      //weaponBoundary();
     }
   }
 
