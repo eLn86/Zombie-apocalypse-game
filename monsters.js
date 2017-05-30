@@ -34,14 +34,10 @@ var Monster = function(settings) {
   function move() {
     if(settings.automatic) {
         monsterElement.style.left = parseInt(monsterElement.style.left)-settings.monsterSpeed+"px";
-
     }
-
     if(settings.walls) {
     wall();
     }
-
-
 }
 
   function createMonster() {

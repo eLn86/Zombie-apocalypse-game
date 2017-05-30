@@ -147,10 +147,8 @@ var Weapon = function(settings) {
 
     //When spacebar is released, get the x and y of the weapon as well as the power value at which to fire bullets
     if(interactions.space === false) {
-        var weaponRect = weaponElement.getBoundingClientRect();
-        var x = weaponRect.left;
-        var y = weaponRect.top;
-        var power = powerCount;
+        settings.bulletPower = powerCount;
+        console.log(settings.bulletPower);
         powerCount = 0;
     }
   }
