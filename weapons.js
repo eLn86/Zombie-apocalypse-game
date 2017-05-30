@@ -78,7 +78,7 @@ var Weapon = function(settings) {
     }
 
     if(interactions.up){
-      //interactions.down = true;
+      //move the crosshair up along the x and y axis in an arc
       var playerElement = document.getElementById('player');
       var playerObj = playerElement.getBoundingClientRect();
       var weapElement = document.getElementById('weapon');
@@ -97,7 +97,7 @@ var Weapon = function(settings) {
     }
 
     if(interactions.down){
-      //interactions.up = true;
+      //move the crosshair down along the x and y axis in an arc
       var playerElement = document.getElementById('player');
       var playerObj = playerElement.getBoundingClientRect();
       var weapElement = document.getElementById('weapon');
@@ -107,9 +107,7 @@ var Weapon = function(settings) {
         weapElement.style.left = playerObj.width/2 + radius + 'px';
         weapElement.style.top = playerObj.top + (playerObj.height/2) + 'px';
         angle = 0.2;
-
       }
-
 
       var top = (radius*Math.sin(angle));
       var left = (radius*Math.cos(angle));

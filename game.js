@@ -10,9 +10,7 @@ var Game = function() {
     settings.automatic = true;             // The object will move by itself
     settings.godmode = false;              // Debug mode
     settings.id = 1;                       // Monster ID
-    settings.monsterArray = document.getElementsByClassName('monster');
-    settings.playerBB = {x: 5, y: 5, width: 50, height: 50}; // Bounding Box around player
-    settings.monsterBB = {x: 20, y: 10, width: 10, height: 10}; // Bounding Box around monster
+    settings.monsterArray = document.getElementsByClassName('monster'); //Store monster objects into array
 
     // World settings
     var gameObjects = [];                  // All game objects
@@ -137,7 +135,7 @@ var Game = function() {
       if(timer % 2 === 0) {
         spawnMonster();
       }
-      
+
       if(settings.playerHP <= 0) {
         console.log("Game Over, the zombies pwned you!");
       }
