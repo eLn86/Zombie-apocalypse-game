@@ -19,12 +19,15 @@ var Game = function() {
     var score1 = new Scoreboard(settings); // Scoreboard
     var weapon1 = new Weapon(settings);    // first weapon
     var playerHP = new PlayerHP(settings); // Add player HP
+    var powerbar = new Powerbar(settings); // Add power bar above player
     gameObjects[0] = player1;              // Add player to the game objects array
     gameObjects[1] = score1;               // Add scoreboard to the game objects array
     gameObjects[2] = weapon1;              // Add weapon to the game objects array
     gameObjects[3] = playerHP;             // Add player HP to the game objects array
+    gameObjects[4] = powerbar;             // Add power bar to the game objects array
     var frame = 0;                         // Frames since the start of the game
     var timer = 0;                         // Seconds passed since the start of game
+    var spawnTimer = Math.random();        // Random spawn time for monster
 
     // Interactions
     var interactions = {};
@@ -133,7 +136,7 @@ var Game = function() {
             gameObjects[i].render(interactions);
           }
 
-      if(timer % 2 === 0) {
+      if(timer % (Math.floor(spawnTimer*8)) === 0) {
         spawnMonster();
       }
 

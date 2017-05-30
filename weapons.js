@@ -127,7 +127,6 @@ var Weapon = function(settings) {
   function fireWeapon(interactions){
 
     if(interactions.space){
-
     //increase the power from 0 to 100 and decrease it to 100 to 0 repeatedly
     if (increase == true && powerCount <= ceiling) {
         powerCount += x;
@@ -145,7 +144,7 @@ var Weapon = function(settings) {
       console.log(powerCount);
     }
 
-    //When spacebar is released, get the x and y of the weapon as well as the power value at which to fire bullets
+    //When spacebar is released, get the power value at which to fire bullets
     if(interactions.space === false) {
         settings.bulletPower = powerCount;
         console.log(settings.bulletPower);
