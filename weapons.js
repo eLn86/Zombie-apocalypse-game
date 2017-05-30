@@ -41,8 +41,30 @@ var Weapon = function(settings) {
 
   function weaponBoundary() {
 
-    
+    var weaponObj = null;
+    var playerObj = null;
+    weaponObj = weaponElement.getBoundingClientRect();
+    playerObj = playerElement.getBoundingClientRect();
 
+    //collision detection for top of weapon
+    if(weaponObj.top < (playerObj.top - 60)) {
+      weaponElement.style.top = (playerObj.top - 60) + 'px';
+    }
+
+    //collision detection for left of weapon
+    if(weaponObj.left < (playerObj.left + 50)) {
+      weaponElement.style.left = (playerObj.left + 50) + 'px';
+    }
+
+    //collision detection for bottom of weapon
+    if((weaponObj.top-weaponObj.height) > (playerObj.top - (playerObj.height/4))) {
+      weaponElement.style.top = (playerObj.top - (playerObj.height/4)) + weaponObj.height + 'px';
+    }
+
+     //collision detection for right of weapon
+     if((weaponObj.left + weaponObj.width) > ((playerObj.left + playerObj.width) + 50)) {
+       weaponElement.style.left = ((playerObj.left + playerObj.width) + 50) + 'px';
+     }
 
   }
 
@@ -71,6 +93,7 @@ var Weapon = function(settings) {
 
     if(settings.walls){
       wall();
+      weaponBoundary();
     }
   }
 
