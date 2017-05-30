@@ -5,6 +5,12 @@
   <title>Zombie Apocalypse</title>
 
   <style>
+    body {
+      background-image: url("wireframing/game-screen.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 100% 20%;
+    }
 
     #player {
       height: 100px;
@@ -28,40 +34,94 @@
 
     #scoreboard {
       height: 50px;
-      width: 200px;
-      background-color: grey;
-      position: absolute;
-      top: 50px;
-      left: 50px;
+      width: 100px;
+      background-color: black;
+      color: white;
       text-align: center;
       margin: 0 auto;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    #playerHP {
+      height: 50px;
+      width: 100px;
+      background-color: white;
+      color: blue;
+      text-align: center;
+      margin: 0 auto;
+      font-size: 20px;
+      font-weight: bolder;
+    }
+
+    #hpBar {
+      width: 205px;
+      height: 35px;
+      padding: 2px;
+      background-color: white;
+      position: relative;
+    }
+
+    #currentHp {
+      width: 200px;
+      height: 30px;
+      background-color: red;
+      position: absolute;
+
     }
 
     #weapon {
-      height: 50px;
-      width: 50px;
-      background-color: green;
+      height: 40px;
+      width: 40px;
+      border: 1px solid black;
       position: absolute;
-      top: 50px;
+      top: 300px;
       left: 50px;
+      border-radius: 20px;
+      text-align: center;
+      color: black;
+      font-size: 30px;
     }
 
   </style>
+
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 </head>
 
 <body>
-  <div id="scoreboard"></div>
-  <div id="player"></div>
-  <div id="weapon"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div id="scoreboard"></div>
+      </div>
+      <div class="col-md-3">
+        <div id="playerHP"></div>
+      </div>
+      <div class="col-md-3">
+        <div id="hpBar"><div id="currentHp"></div></div>
+      </div>
+    </div>
 
+    <div class="row">
+      <div id="player"></div>
+      <div id="weapon">+</div>
+    </div>
+  </div>
 
   <script type="text/javascript" src="jquery.min.js"></script>
   <script type="text/javascript" src="scoreboard.js"></script>
   <script type="text/javascript" src="monsters.js"></script>
   <script type="text/javascript" src="player.js"></script>
+  <script type="text/javascript" src="playerHP.js"></script>
   <script type="text/javascript" src="weapons.js"></script>
 
   <script type="text/javascript" src="game.js"></script>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>

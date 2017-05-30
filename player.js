@@ -1,9 +1,11 @@
 var Player = function(settings) {
 
     // Settings
+    var hpElement = null;
+    var currentHpElement = null;
     var playerElement = null;
-    var playerHP = 100;             // Default player hit points
-    var hitMonster = false;   // Boolean to check if player has collided with monster
+    var hitMonster = false;             // Boolean to check if player has collided with monster
+
     // Collision detection between object and window boundaries
     function wall() {
 
@@ -30,20 +32,25 @@ var Player = function(settings) {
     }
 
     // set up collision detection between player and monsters
-    function playerWall(interactions) {
+    function playerWall() {
 
         var playerRect = null;
         var monsterStats = [];
 
           for(var i=0;i<settings.monsterArray.length;i++) {
           playerRect = playerElement.getBoundingClientRect();
-
-          if(parseInt(settings.monsterArray[i].style.left) < playerRect.right){  //collision conditional
+          // Collision detection between player and monster
+          if(parseInt(settings.monsterArray[i].style.left) <= playerRect.right){  //collision conditional
             settings.monsterArray[i].style.left = playerRect.right + 'px';
             //playerElement.style.left = parseInt(settings.monsterArray[i].style.left) - playerRect.width + 'px';
             hitMonster = true;
+            settings.playerHP -= 0.05;
+            hpElement = document.getElementById('playerHP');
+            hpElement.innerHTML = Math.floor(settings.playerHP);
+            currentHpElement = document.getElementById('currentHp');
+            currentHpElement.style.width = (settings.playerHP*2) + 'px';
+            console.log(currentHpElement.style.width);
           }
-
         }
     }
 
@@ -53,16 +60,17 @@ var Player = function(settings) {
 
       if(interactions.left){
         playerElement.style.left = parseInt(playerElement.style.left)-settings.playerSpeed+"px";
+        hitMonster = false;
       }
 
       if(interactions.right){
-          if(hitMonster === true) {
-            interactions.right = false;
-          }
-          else {
-            playerElement.style.left = parseInt(playerElement.style.left)+settings.playerSpeed+"px";
-          }
 
+        if(hitMonster) {
+          interactions.right = false;
+        }
+        else{
+          playerElement.style.left = parseInt(playerElement.style.left)+settings.playerSpeed+"px";
+        }
       }
 
       if(settings.walls){
@@ -82,8 +90,15 @@ var Player = function(settings) {
         playerElement.style.height = '100px';
     }
 
+    function createPlayerHp() {
+        //create hp
+        hpElement = document.getElementById('currentHp');
+        hpElement.style.width = '200px';
+    }
+
     function init(){
       createPlayer();
+      createPlayerHp();
     }
 
     this.render = function(interactions){

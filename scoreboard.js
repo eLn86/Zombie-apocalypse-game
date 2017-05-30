@@ -36,9 +36,8 @@ var Scoreboard = function(settings) {
   function createScoreboard() {
     // Create the object asset
     scoreElement = document.getElementById('scoreboard');
-    scoreElement.style.top = '0px';
-    scoreElement.style.left = '600px';
-    scoreElement.style.height = '30px';
+    scoreElement.style.height = '100px';
+    scoreElement.style.height = '50px';
     scoreElement.innerHTML = currentScore;
   }
 

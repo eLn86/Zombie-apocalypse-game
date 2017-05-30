@@ -2,6 +2,7 @@ var Weapon = function(settings) {
 
   // Settings
   var weaponElement = null;
+  var playerElement = null;
 
   // variables for weapon power meter
   var powerCount = 0;             //counter to measure power of projectile
@@ -36,6 +37,28 @@ var Weapon = function(settings) {
     if(weaponRect.right > w){
         weaponElement.style.left = ( w - weaponRect.width) + 'px' ;
     }
+  }
+
+  function weaponBoundary() {
+
+      var playerRect = null;
+      var monsterStats = [];
+
+        for(var i=0;i<settings.monsterArray.length;i++) {
+        playerRect = playerElement.getBoundingClientRect();
+        // Collision detection between player and monster
+        if(parseInt(settings.monsterArray[i].style.left) <= playerRect.right){  //collision conditional
+          settings.monsterArray[i].style.left = playerRect.right + 'px';
+          //playerElement.style.left = parseInt(settings.monsterArray[i].style.left) - playerRect.width + 'px';
+          hitMonster = true;
+          settings.playerHP -= 0.05;
+          hpElement = document.getElementById('playerHP');
+          hpElement.innerHTML = Math.floor(settings.playerHP);
+          currentHpElement = document.getElementById('currentHp');
+          currentHpElement.style.width = (settings.playerHP*2) + 'px';
+          console.log(currentHpElement.style.width);
+        }
+      }
   }
 
   // Move the weapon together with the player manually
@@ -100,10 +123,12 @@ var Weapon = function(settings) {
 
   function createWeapon() {
       // Create the object asset
+      playerElement = document.getElementById('player');
       weaponElement = document.getElementById('weapon');
-      weaponElement.style.top = '330px';
-      weaponElement.style.left = '50px';
-      weaponElement.style.height = '50px';
+      weaponElement.style.top = (parseInt(playerElement.style.top) - 60) + 'px';
+      weaponElement.style.left = (parseInt(playerElement.style.left) + 50) + 'px';;
+      weaponElement.style.height = '40px';
+      weaponElement.style.width = '40px';
   }
 
   function init(){
