@@ -9,6 +9,7 @@ var Game = function() {
     settings.automatic = true;             // The object will move by itself
     settings.godmode = false;              // Debug mode
     settings.id = 1;                       // Monster ID
+    settings.monsterArray = document.getElementsByClassName('monster');
     settings.playerBB = {x: 5, y: 5, width: 50, height: 50}; // Bounding Box around player
     settings.monsterBB = {x: 20, y: 10, width: 10, height: 10}; // Bounding Box around monster
 
@@ -17,11 +18,9 @@ var Game = function() {
     var player1 = new Player(settings);    // The player
     var score1 = new Scoreboard(settings); // Scoreboard
     var weapon1 = new Weapon(settings);    // first weapon
-    //var monster1 = new Monster(settings);  // first monster
     gameObjects[0] = player1;              // Add player to the game objects array
     gameObjects[1] = score1;               // Add scoreboard to the game objects array
     gameObjects[2] = weapon1;              // Add weapon to the game objects array
-    //gameObjects[3] = monster1;             // Add monster to the game objects array
     var frame = 0;                         // Frames since the start of the game
     var timer = 0;                         // Seconds passed since the start of game
 
@@ -122,6 +121,7 @@ var Game = function() {
 
     function spawnMonster() {
       gameObjects.push(new Monster(settings));
+      settings.monsterArray = document.getElementsByClassName('monster');
     }
 
 
@@ -135,7 +135,7 @@ var Game = function() {
         spawnMonster();
       }
 
-      
+
 
       frame++;
       timer = frame/60;

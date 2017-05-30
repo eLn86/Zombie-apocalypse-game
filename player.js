@@ -29,24 +29,20 @@ var Player = function(settings) {
 
     }
 
-    // set up bounding box for player for the sake of collision detection
-    function playerWall() {
+    // set up collision detection between player and monsters
+    function playerWall(interactions) {
 
-//      setTimeout(function(){
         var playerRect = null;
-        var monsterRect = document.getElementsByClassName("monster");
         var monsterStats = [];
 
-          for(var i=0;i<monsterRect.length;i++) {
+          for(var i=0;i<settings.monsterArray.length;i++) {
           playerRect = playerElement.getBoundingClientRect();
-          monsterStats[0] = monsterRect[0].getBoundingClientRect();
-          if(monsterStats[0].left === (playerRect.left + playerRect.width)){
-             monsterStats[0].style.left = playerRect.style.right + "px";
+
+          if(parseInt(settings.monsterArray[i].style.left) < playerRect.right){
+            settings.monsterArray[i].style.left = playerRect.right + 'px';
+            interactions.right == false;
           }
         }
-//      }, 2000);
-
-
     }
 
 
@@ -63,7 +59,7 @@ var Player = function(settings) {
 
       if(settings.walls){
         wall();
-        playerWall();
+        playerWall(interactions);
       }
 
     }
