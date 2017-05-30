@@ -41,24 +41,9 @@ var Weapon = function(settings) {
 
   function weaponBoundary() {
 
-      var playerRect = null;
-      var monsterStats = [];
+    
 
-        for(var i=0;i<settings.monsterArray.length;i++) {
-        playerRect = playerElement.getBoundingClientRect();
-        // Collision detection between player and monster
-        if(parseInt(settings.monsterArray[i].style.left) <= playerRect.right){  //collision conditional
-          settings.monsterArray[i].style.left = playerRect.right + 'px';
-          //playerElement.style.left = parseInt(settings.monsterArray[i].style.left) - playerRect.width + 'px';
-          hitMonster = true;
-          settings.playerHP -= 0.05;
-          hpElement = document.getElementById('playerHP');
-          hpElement.innerHTML = Math.floor(settings.playerHP);
-          currentHpElement = document.getElementById('currentHp');
-          currentHpElement.style.width = (settings.playerHP*2) + 'px';
-          console.log(currentHpElement.style.width);
-        }
-      }
+
   }
 
   // Move the weapon together with the player manually
