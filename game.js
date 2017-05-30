@@ -153,7 +153,7 @@ var Game = function() {
 
             (function animloop(){
               requestAnimFrame(animloop);
-              self.render();;
+              self.render();
             })();
 
             init();

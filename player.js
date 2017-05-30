@@ -2,8 +2,8 @@ var Player = function(settings) {
 
     // Settings
     var playerElement = null;
-    var playerHP = 100;             //Default player hit points
-
+    var playerHP = 100;             // Default player hit points
+    var hitMonster = false;   // Boolean to check if player has collided with monster
     // Collision detection between object and window boundaries
     function wall() {
 
@@ -38,10 +38,12 @@ var Player = function(settings) {
           for(var i=0;i<settings.monsterArray.length;i++) {
           playerRect = playerElement.getBoundingClientRect();
 
-          if(parseInt(settings.monsterArray[i].style.left) < playerRect.right){
+          if(parseInt(settings.monsterArray[i].style.left) < playerRect.right){  //collision conditional
             settings.monsterArray[i].style.left = playerRect.right + 'px';
-            interactions.right == false;
+            //playerElement.style.left = parseInt(settings.monsterArray[i].style.left) - playerRect.width + 'px';
+            hitMonster = true;
           }
+
         }
     }
 
@@ -54,13 +56,21 @@ var Player = function(settings) {
       }
 
       if(interactions.right){
-        playerElement.style.left = parseInt(playerElement.style.left)+settings.playerSpeed+"px";
+          if(hitMonster === true) {
+            interactions.right = false;
+          }
+          else {
+            playerElement.style.left = parseInt(playerElement.style.left)+settings.playerSpeed+"px";
+          }
+
       }
 
       if(settings.walls){
         wall();
         playerWall(interactions);
       }
+
+
 
     }
 
