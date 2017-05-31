@@ -49,7 +49,6 @@ var Player = function(settings) {
             hpElement.innerHTML = Math.floor(settings.playerHP);
             currentHpElement = document.getElementById('currentHp');
             currentHpElement.style.width = (settings.playerHP*2) + 'px';
-            console.log(currentHpElement.style.width);
           }
         }
     }

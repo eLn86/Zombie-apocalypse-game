@@ -3,6 +3,9 @@ var Powerbar = function(settings) {
   // Settings
   var pbElement = null;
   var playerElement = null;
+  var ceiling = 200;              //Max power value
+  var increase = true;            //Check if power is increasing
+  var x = 2;                    //incremental for power
 
   function wall() {
 
@@ -40,10 +43,28 @@ var Powerbar = function(settings) {
 
     if(interactions.space){
       pbElement.style.display = "block";
+
+      if (increase == true && (settings.powerCount <= ceiling)) {
+          settings.powerCount += x;
+          pbElement.style.width = settings.powerCount + 'px';
+          if (settings.powerCount == ceiling)
+          {increase = false;}
+        }
+
+      else {
+          increase = false;
+          settings.powerCount -= x;
+          pbElement.style.width = settings.powerCount + 'px';
+          if (settings.powerCount == 0) {
+            increase = true;
+          }
+        }
     }
 
     if(interactions.space === false){
       pbElement.style.display = "none";
+      settings.bulletPower = settings.powerCount / 2;
+      settings.powerCount = 0;
     }
 
     if(settings.walls){
@@ -58,7 +79,7 @@ var Powerbar = function(settings) {
     var playerRect = playerElement.getBoundingClientRect();
     pbElement.style.top = (playerRect.top - 150) + 'px';
     pbElement.style.left = playerRect.left + 'px';
-    pbElement.style.width = "200px";
+    pbElement.style.width = "0px";
     pbElement.style.height = "30px";
   }
 

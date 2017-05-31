@@ -124,33 +124,31 @@ var Weapon = function(settings) {
   }
 
   // Fire weapon manually via pressing space bar
-  function fireWeapon(interactions){
+  // function fireWeapon(interactions){
+  //
+  //   if(interactions.space){
+  //   //increase the power from 0 to 100 and decrease it to 100 to 0 repeatedly
+  //   if (increase == true && powerCount <= ceiling) {
+  //       powerCount += x;
+  //       if (powerCount == ceiling)
+  //       {increase = false;}
+  //     }
+  //
+  //   else {
+  //       increase = false;
+  //       powerCount -= x;
+  //
+  //       if (powerCount == 0)
+  //       {increase = true;}
+  //     }
+  //   }
 
-    if(interactions.space){
-    //increase the power from 0 to 100 and decrease it to 100 to 0 repeatedly
-    if (increase == true && powerCount <= ceiling) {
-        powerCount += x;
-        if (powerCount == ceiling)
-        {increase = false;}
-      }
-
-    else {
-        increase = false;
-        powerCount -= x;
-
-        if (powerCount == 0)
-        {increase = true;}
-      }
-      console.log(powerCount);
-    }
-
-    //When spacebar is released, get the power value at which to fire bullets
-    if(interactions.space === false) {
-        settings.bulletPower = powerCount;
-        console.log(settings.bulletPower);
-        powerCount = 0;
-    }
-  }
+  //   //When spacebar is released, get the power value at which to fire bullets
+  //   if(interactions.space === false) {
+  //       settings.bulletPower = powerCount;
+  //       powerCount = 0;
+  //   }
+  // }
 
   function createWeapon() {
       // Create the object asset
@@ -168,7 +166,7 @@ var Weapon = function(settings) {
 
   this.render = function(interactions){
     move(interactions);
-    fireWeapon(interactions);
+    // fireWeapon(interactions);
   }
 
   init();
