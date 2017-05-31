@@ -30,8 +30,8 @@ var Bullet = function(settings) {
   }
 
   function move() {
-    if(settings.automatic) {
-        bulletElement.style.left = parseInt(bulletElement.style.left)-settings.bulletSpeed+"px";
+    if(settings.automatic && settings.fireBullet) {
+        bulletElement.style.left = parseInt(bulletElement.style.left)+settings.bulletPower+"px";
     }
     if(settings.walls) {
     wall();

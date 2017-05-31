@@ -59,12 +59,17 @@ var Powerbar = function(settings) {
             increase = true;
           }
         }
+
     }
 
     if(interactions.space === false){
+      increase = true;
       pbElement.style.display = "none";
       settings.bulletPower = settings.powerCount / 2;
       settings.powerCount = 0;
+      pbElement.style.width = settings.powerCount + 'px';
+      settings.fireBullet = true;
+
     }
 
     if(settings.walls){

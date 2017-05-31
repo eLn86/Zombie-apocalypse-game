@@ -5,6 +5,8 @@ var Game = function() {
     settings.playerSpeed = 8;              // The speed of the player when moving
     settings.playerHP = 100;               // Default player HP
     settings.monsterSpeed = 0.5;           // The speed of the zombie
+    settings.spaceBarPnR = false;          // check if the space bar has been pressed and released
+    settings.fireBullet = false;           // fire the bullet
     settings.bulletSpeed = 0.5;            // The speed of the bullet
     settings.powerCount = 0;               // Power count for power bar
     settings.bulletPower = 0;              // The power of the bullet after space bar is released
@@ -137,7 +139,7 @@ var Game = function() {
             gameObjects[i].render(interactions);
           }
 
-      if(timer % (Math.floor(spawnTimer*8)) === 0) {
+      if(timer % (Math.floor(spawnTimer*10)) === 0) {
         spawnMonster();
       }
 

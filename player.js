@@ -42,7 +42,6 @@ var Player = function(settings) {
           // Collision detection between player and monster
           if(parseInt(settings.monsterArray[i].style.left) <= playerRect.right){  //collision conditional
             settings.monsterArray[i].style.left = playerRect.right + 'px';
-            //playerElement.style.left = parseInt(settings.monsterArray[i].style.left) - playerRect.width + 'px';
             hitMonster = true;
             settings.playerHP -= 0.05;
             hpElement = document.getElementById('playerHP');
