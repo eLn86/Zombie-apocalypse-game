@@ -13,9 +13,10 @@ var Game = function() {
     settings.walls = true;                 // The game objects cannot go outside the set boundaries of the screen
     settings.automatic = true;             // The object will move by itself
     settings.godmode = false;              // Debug mode
-    settings.id = 1;                       // Monster ID
+    settings.monsterId = 1;                // Monster ID
+    settings.bulletId = 1;                 // Bullet ID
     settings.monsterArray = document.getElementsByClassName('monster'); //Store monster objects into array
-
+    settings.bulletArray = document.getElementsByClassName('bullet'); //Store bullet objects into array
     // World settings
     var gameObjects = [];                  // All game objects
     var player1 = new Player(settings);    // The player
@@ -132,6 +133,11 @@ var Game = function() {
       settings.monsterArray = document.getElementsByClassName('monster');
     }
 
+    function spawnBullet() {
+      gameObjects.push(new Bullet(settings));
+      settings.bulletArray = document.getElementsByClassName('bullet');
+    }
+
 
     // The render function. It will be called 60/sec
     this.render = function(){
@@ -139,8 +145,14 @@ var Game = function() {
             gameObjects[i].render(interactions);
           }
 
-      if(timer % (Math.floor(spawnTimer*10)) === 0) {
-        spawnMonster();
+      // if(timer % (Math.floor(spawnTimer*10)) === 0) {
+      //   spawnMonster();
+      // }
+
+      if(settings.spaceBarPnR && settings.fireBullet){
+        spawnBullet();
+        settings.fireBullet = false;
+        settings.spaceBarPnR = false;
       }
 
       if(settings.playerHP <= 0) {

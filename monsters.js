@@ -3,7 +3,7 @@ var Monster = function(settings) {
   // Settings
   var monsterElement = null;
   var monsterHP = 100;            //Default monster hit points
-  this.id = settings.id;          //get the id of each monster after created in game.js
+  this.id = settings.monsterId;   //get the id of each monster after created in game.js
 
   // Collision detection between object and window boundaries
   function wall() {
@@ -43,8 +43,8 @@ var Monster = function(settings) {
   function createMonster() {
     // Create the object asset
     if ($('monster #'+this.id)) {
-      settings.id++;
-      this.id=settings.id;
+      settings.monsterId++;
+      this.id=settings.monsterId;
     }
 
     $('body').append("<div id='" + this.id + "' class='monster'></div>");

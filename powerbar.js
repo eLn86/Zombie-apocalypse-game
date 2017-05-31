@@ -43,7 +43,8 @@ var Powerbar = function(settings) {
 
     if(interactions.space){
       pbElement.style.display = "block";
-
+      settings.fireBullet = false;
+      settings.spaceBarPnR = false;
       if (increase == true && (settings.powerCount <= ceiling)) {
           settings.powerCount += x;
           pbElement.style.width = settings.powerCount + 'px';
@@ -62,14 +63,14 @@ var Powerbar = function(settings) {
 
     }
 
-    if(interactions.space === false){
+    if(interactions.space === false && settings.spaceBarPnR === false && settings.fireBullet === false){
       increase = true;
       pbElement.style.display = "none";
       settings.bulletPower = settings.powerCount / 2;
       settings.powerCount = 0;
       pbElement.style.width = settings.powerCount + 'px';
       settings.fireBullet = true;
-
+      settings.spaceBarPnR = true;
     }
 
     if(settings.walls){
@@ -82,7 +83,7 @@ var Powerbar = function(settings) {
     pbElement = document.getElementById('powerBar');
     playerElement = document.getElementById('player');
     var playerRect = playerElement.getBoundingClientRect();
-    pbElement.style.top = (playerRect.top - 150) + 'px';
+    pbElement.style.top = (playerRect.top - 100) + 'px';
     pbElement.style.left = playerRect.left + 'px';
     pbElement.style.width = "0px";
     pbElement.style.height = "30px";

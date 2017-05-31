@@ -2,36 +2,38 @@ var Bullet = function(settings) {
 
   // Settings
   var bulletElement = null;
+  var playerElement = null;
   var bulletDamage = 50;         //Default bullet damage
 
   // Collision detection between bullet and ground / monsters / player / window boundaries
-  function bulletCollide() {
+  function wall() {
 
     var bulletRect = bulletElement.getBoundingClientRect();
     var w = parseInt(window.innerWidth);
     var h = parseInt(window.innerHeight);
 
-    if(monsterRect.bottom > h){
+    if(bulletRect.bottom > h){
       bulletElement.style.top = (h-bulletRect.height) + 'px';
     }
 
-    if(monsterRect.top < 0){
+    if(bulletRect.top < 0){
       bulletElement.style.top = '0px';
     }
 
-    if(monsterRect.left < 0){
+    if(bulletRect.left < 0){
         bulletElement.style.left = '0px';
     }
 
-    if(monsterRect.right > w){
+    if(bulletRect.right > w){
         bulletElement.style.left = ( w - bulletRect.width) + 'px' ;
     }
 
   }
 
   function move() {
+
     if(settings.automatic && settings.fireBullet) {
-        bulletElement.style.left = parseInt(bulletElement.style.left)+settings.bulletPower+"px";
+        bulletElement.style.left = parseInt(bulletElement.style.left)+settings.bulletSpeed+"px";
     }
     if(settings.walls) {
     wall();
@@ -40,22 +42,24 @@ var Bullet = function(settings) {
 
   function createBullet() {
     // Create the object asset
-    if ($('monster #'+this.id)) {
+    if ($('bullet #'+this.id)) {
       settings.id++;
       this.id=settings.id;
     }
 
-    $('body').append("<div id='" + this.id + "' class='monster'></div>");
+    $('body').append("<div id='" + this.id + "' class='bullet'></div>");
     //style='top:300px;left:1200px;height:100px'
-    monsterElement = document.getElementById((this.id).toString());
-
-    monsterElement.style.top = '300px'
-    monsterElement.style.left = '1200px';
-    monsterElement.style.height = '100px';
+    bulletElement = document.getElementById((this.id).toString());
+    playerElement = document.getElementById('player');
+    var playerRect = playerElement.getBoundingClientRect();
+    bulletElement.style.top = (playerRect.top + playerRect.height/2 - parseInt(bulletElement.style.height)/2) + 'px';
+    bulletElement.style.left = (playerRect.left + playerRect.width/2 - parseInt(bulletElement.style.width)/2) + 'px';
+    bulletElement.style.width = "50px";
+    bulletElement.style.height = "50px";
   }
 
   function init() {
-      createMonster();
+      createBullet();
   }
 
   this.render = function(interactions){
