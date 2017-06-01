@@ -5,13 +5,14 @@ var Bullet = function(settings) {
   var playerElement = null;
   var bulletDamage = 50;        //Default bullet damage
   var bulletidParent = null;
-  this.id = settings.bulletID;
+  this.id;
+  console.log(this.id)
   // variables for weapon aim arc
   var angle = Math.PI/2;
 
   // Collision detection between bullet and ground / monsters / player / window boundaries
   function wall() {
-    if(settings.bulletMoving) {
+      console.log('wall is present')
       bulletElement = document.getElementById('bullet'+this.id);
       var bulletRect = bulletElement.getBoundingClientRect();
       var w = parseInt(window.innerWidth);
@@ -25,7 +26,6 @@ var Bullet = function(settings) {
       //settings.bulletID = 0;
       //this.id=settings.bulletID;
     }
-  }
 }
 
   function move(interactions) {
@@ -77,33 +77,22 @@ var Bullet = function(settings) {
     // if(settings.firstbulletFired) {
     //   makeBullet();
     // }
-      bulletElement = document.getElementById(("bullet"+this.id).toString());
-    if (bulletElement) {
-      console.log(bulletElement.id)
-      if(settings.fireBullet) {
-      fireBullet();
-      console.log("2. firebullet this.id="+this.id);
+      if (settings.bulletMoving) {
+        fireBullet();
+        wall();
       }
-
-      if(settings.bulletFired && settings.bulletMoving) {
-      moveBullet();
-      console.log("3. movebullet this.id="+this.id);
-      }
-
-      if(settings.walls) {
-      wall();
-      }
-    }
-
 }
 
       function makeBullet() {
       // Create a bullet
-      console.log("1. makebullet this.id="+this.id);
-      if ($('bullet #bullet'+this.id)) {
-          settings.bulletID++;
-          this.id=settings.bulletID;
-      }
+
+          this.id = settings.bulletID
+          console.log(this.id)
+          this.id++;
+          console.log(this.id)
+          settings.bulletID = this.id;
+          console.log("1. makebullet this.id="+this.id);
+
 
       $('body').append("<div id='bullet" + this.id + "' class='bullet'></div>");
       bulletElement = document.getElementById(("bullet"+this.id).toString());
@@ -116,32 +105,25 @@ var Bullet = function(settings) {
       bulletElement.style.top = (playerRect.top - 60) + 'px';
       bulletElement.style.left = (playerRect.left + (playerRect.width/2) - (bulletRect.width/2)) + 'px';
       bulletElement.style.display = "inline-block";
+      settings.bulletMoving = true;
       console.log(bulletElement.style.left);
-
+      console.log('make bullet', this.id, settings.bulletID)
     }
 
       //function which fires the bullet from its rendered position
       function fireBullet() {
       this.id = settings.bulletID;
+      console.log(this.id, settings.bulletID)
       weaponElement = document.getElementById('weapon');
       bulletElement = document.getElementById(("bullet"+(this.id)).toString());
       var weaponRect = weaponElement.getBoundingClientRect();
-      bulletElement.style.top = weaponRect.top + 'px';
-      bulletElement.style.left = weaponRect.left + 'px';
+      //bulletElement.style.top = weaponRect.top + 'px';
+      //bulletElement.style.left = weaponRect.left + 'px';
       bulletElement.style.display = "inline-block";
-
-      settings.bulletFired = true;
-      settings.bulletMoving = true;
-      settings.firstbulletFired = true;
-        settings.fireBullet = false;
+      //settings.fireBullet = false;
+      bulletElement.style.left = parseInt(bulletElement.style.left) + 8 + 'px';
       // this.id++;
 
-    }
-
-      //function which moves the bullet after it is fired
-      function moveBullet() {
-      //bulletElement = document.getElementById(("bullet"+this.id).toString());
-      bulletElement.style.left = parseInt(bulletElement.style.left) + 8 + 'px';
     }
 
       function destroyBullet() {

@@ -63,13 +63,13 @@ var Powerbar = function(settings) {
 
     }
 
-    if(interactions.space === false && settings.fireBullet === false && settings.spaceBarDepressed) {
+    if(interactions.space === false && settings.spaceBarDepressed) {
       increase = true;
       pbElement.style.display = "none";
       settings.bulletPower = settings.powerCount / 2;
       settings.powerCount = 0;
       pbElement.style.width = settings.powerCount + 'px';
-      settings.fireBullet = true;
+
       settings.spaceBarDepressed = false;
     }
 
