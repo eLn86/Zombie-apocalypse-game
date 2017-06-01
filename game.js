@@ -21,7 +21,7 @@ var Game = function() {
     settings.monsterObjArray = [];
     settings.bulletArray = document.getElementsByClassName('bullet');  //Store bullet objects into array
     settings.bulletMoving = true;         // Don't move the bullet if false
-
+    settings.bossTime = true;            // Change music when boss spawns
 
     // World settings
     var gameObjects = [];                  // All game objects
@@ -148,13 +148,44 @@ var Game = function() {
       settings.bulletArray = document.getElementsByClassName('bullet');
     }
 
+    // function createMusic() {
+    //   var myAudio = document.createElement("audio");
+    //   var body = document.body;
+    //   body.appendChild(myAudio);
+    //   myAudio.src = "zombies.mp3";
+    //   myAudio.loop = "loop";
+    //   myAudio.autoplay = "autoplay";
+    // }
+    //
+    // function changeMusic(track) {
+    //   var urlElement = document.getElementById("music").src;
+    //   switch(track) {
+    //     case 'boss':
+    //     urlElement.src = "boss.mp3";
+    //     break;
+    //     case 'gameover':
+    //     urlElement.src = "gameover.mp3";
+    //     break;
+    //     case 'victory':
+    //     urlElement.src = "victory.mp3";
+    //     break;
+    //     default:
+    //     urlElement.src = "zombies.mp3";
+    //     break;
+    //   }
+    // }
+    //
+    // if (timer % 20 == 0) {
+    //   changeMusic("boss");
+    // }
+
     // The render function. It will be called 60/sec
     this.render = function(){
         for(var i=0; i < gameObjects.length; i++){
             gameObjects[i].render(interactions);
           }
 
-       if(timer % 3 === 0) {
+       if(timer % 3 == 0) {
          spawnMonster();
        }
 
@@ -169,6 +200,7 @@ var Game = function() {
 
       frame++;
       timer = frame/60;
+      console.log(document.getElementsByTagName("audio").src);
     }
 
     var self = this; // Add this line
