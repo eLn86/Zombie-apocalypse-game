@@ -3,7 +3,7 @@ var Monster = function(settings) {
   // Settings
   var monsterElement = null;
   var monsterHP = 100;            //Default monster hit points
-  this.id = settings.monsterID;   //get the id of each monster after created in game.js
+  this.monsterID = settings.monsterID;   //get the id of each monster after created in game.js
 
   // Collision detection between object and window boundaries
   function wall() {
@@ -32,7 +32,7 @@ var Monster = function(settings) {
 
   //Move the monster from right to left automatically
   function move() {
-    if(settings.automatic) {
+    if(settings.automaticallyMove) {
         monsterElement.style.left = parseInt(monsterElement.style.left) - settings.monsterSpeed+"px";
     }
     if(settings.walls) {
@@ -42,14 +42,14 @@ var Monster = function(settings) {
 
   function createMonster() {
     // Create the object asset
-    if ($('monster #monster'+this.id)) {
+    if ($('monster #monster'+this.monsterID)) {
       settings.monsterID++;
-      this.id=settings.monsterID;
+      this.monsterID=settings.monsterID;
     }
 
-    $('body').append("<div id='monster" + this.id + "' class='monster'></div>");
+    $('body').append("<div id='monster" + this.monsterID + "' class='monster'></div>");
     //style='top:300px;left:1200px;height:100px'
-    monsterElement = document.getElementById(("monster"+this.id).toString());
+    monsterElement = document.getElementById(("monster"+this.monsterID).toString());
     monsterElement.style.top = '300px'
     monsterElement.style.left = '1200px';
     monsterElement.style.height = '100px';

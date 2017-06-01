@@ -5,19 +5,26 @@ var Game = function() {
     settings.playerSpeed = 8;              // The speed of the player when moving
     settings.playerHP = 100;               // Default player HP
     settings.monsterSpeed = 0.5;           // The speed of the zombie
+    // settings.spawnBullet = function() {    // Global function to spawn bullets
+    //   console.log('created new bullet')
+    //
+    // }
+    settings.firstbulletFired = false;
+    settings.bulletLimit = 5;              // Limit for the amount of bullets at any given amount of time
     settings.fireBullet = false;           // fire the bullet if true
-    settings.bulletSpeed = 0.5;            // The speed of the bullet
+    settings.bulletSpeed = 0.1;            // The speed of the bullet
     settings.powerCount = 0;               // Power count for power bar
     settings.bulletPower = 0;              // The power of the bullet after space bar is released
     settings.walls = true;                 // The game objects cannot go outside the set boundaries of the screen
-    settings.automatic = true;             // The object will move by itself
+    settings.automaticallyMove = true;             // The object will move by itself
     settings.godmode = false;              // Debug mode
     settings.monsterID = 1;                // Monster ID
     settings.spaceBarDepressed = false;    //boolean for power bar show and hide conditional
-    // settings.bulletID = 1;                 // Bullet ID
+    settings.bulletID = 0;                 // Bullet ID
     settings.monsterArray = document.getElementsByClassName('monster'); //Store monster objects into array
-    // settings.bulletArray = document.getElementsByClassName('bullet'); //Store bullet objects into array
-
+    settings.bulletArray = document.getElementsByClassName('bullet');  //Store bullet objects into array
+    settings.bulletMoving = false;          // Don't move the bullet if false
+    settings.bulletFired = false;            // Set to true if bullet has been fired
     // World settings
     var gameObjects = [];                  // All game objects
     var player1 = new Player(settings);    // The player
@@ -25,13 +32,11 @@ var Game = function() {
     var weapon1 = new Weapon(settings);    // first weapon
     var playerHP = new PlayerHP(settings); // Add player HP
     var powerbar = new Powerbar(settings); // Add power bar above player
-    var bazBullet = new Bullet(settings);  // Add bullet (display:none)
     gameObjects[0] = player1;              // Add player to the game objects array
     gameObjects[1] = score1;               // Add scoreboard to the game objects array
     gameObjects[2] = weapon1;              // Add weapon to the game objects array
     gameObjects[3] = playerHP;             // Add player HP to the game objects array
     gameObjects[4] = powerbar;             // Add power bar to the game objects array
-    gameObjects[5] = bazBullet;            // Add invisible bullet to the game objects array
     var frame = 0;                         // Frames since the start of the game
     var timer = 0;                         // Seconds passed since the start of game
     var spawnTimer = Math.random();        // Random spawn time for monster
@@ -48,6 +53,7 @@ var Game = function() {
     interactions.a = false;               // 'A' key pressed
     interactions.d = false;               // 'D' key pressed
     interactions.space = false;           // Space Bar key pressed
+    interactions.spaceUp = false;
 
 
     // Setup event listeners
@@ -82,6 +88,7 @@ var Game = function() {
               break;
           case " ":
               interactions.space = false;
+              interactions.spaceUp = true;
               break;
           default:
               break;
@@ -136,6 +143,10 @@ var Game = function() {
       settings.monsterArray = document.getElementsByClassName('monster');
     }
 
+    function createBullet() {
+      gameObjects.push(new Bullet(settings));
+      settings.bulletArray = document.getElementsByClassName('bullet');
+    }
 
     // The render function. It will be called 60/sec
     this.render = function(){
@@ -143,8 +154,13 @@ var Game = function() {
             gameObjects[i].render(interactions);
           }
 
-       if(timer % 5 === 0) {
-         spawnMonster();
+      //  if(timer % 3 === 0) {
+      //    spawnMonster();
+      //  }
+
+       if(interactions.spaceUp) {
+         createBullet();
+         interactions.spaceUp = false;
        }
 
       if(settings.playerHP <= 0) {

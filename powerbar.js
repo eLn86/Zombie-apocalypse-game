@@ -69,7 +69,6 @@ var Powerbar = function(settings) {
       settings.bulletPower = settings.powerCount / 2;
       settings.powerCount = 0;
       pbElement.style.width = settings.powerCount + 'px';
-      console.log(pbElement.style.width);
       settings.fireBullet = true;
       settings.spaceBarDepressed = false;
     }
