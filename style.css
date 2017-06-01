@@ -1,0 +1,102 @@
+  body,html {
+    background-image: url("wireframing/game-screen.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 100% 20%;
+  }
+
+  #player {
+    height: 100px;
+    width: 100px;
+    background-color: blue;
+    position: absolute;
+    top:50px;
+    left:50px;
+    border-radius: 50%;
+  }
+
+  #powerBar {
+    height: 30px;
+    width: 200px;
+    top: 100px;
+    left: 0px;
+    background-color: red;
+    position: absolute;
+    display: none;
+  }
+
+  .monster {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+    position: absolute;
+    top:300px;
+    left:1200px;
+    border-radius: 50%;
+  }
+
+  .bullet {
+    height: 50px;
+    width: 50px;
+    background-color: black;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+    border-radius: 20px;
+  }
+
+  #scoreboard {
+    height: 50px;
+    width: 100px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  #playerHP {
+    height: 50px;
+    width: 100px;
+    background-color: white;
+    color: blue;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 20px;
+    font-weight: bolder;
+  }
+
+  #hpBar {
+    width: 205px;
+    height: 35px;
+    padding: 2px;
+    background-color: white;
+    position: relative;
+  }
+
+  #currentHp {
+    width: 200px;
+    height: 30px;
+    background-color: red;
+    position: absolute;
+
+  }
+
+  #weapon {
+    height: 40px;
+    width: 40px;
+    border: 1px solid black;
+    position: absolute;
+    top: 300px;
+    left: 50px;
+    border-radius: 20px;
+    text-align: center;
+    color: black;
+    font-size: 30px;
+  }
+
+  .default-music{
+    display: hidden;
+  }

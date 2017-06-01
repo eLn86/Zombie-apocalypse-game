@@ -8,8 +8,6 @@ var Bullet = function(settings) {
   var bulletHitMonster = false;
   // var currentlyMoving = false;
   this.id = settings.bulletID;
-  // variables for weapon aim arc
-  var angle = Math.PI/2;
 
   // Collision detection between bullet and ground / monsters / player / window boundaries
   function wall() {
@@ -67,14 +65,13 @@ var Bullet = function(settings) {
         }
       }
 
-
   function move(interactions) {
 
-      // if (settings.bulletMoving) {
+      if (settings.bulletMoving) {
         fireBullet();
         wall();
         bulletWall();
-      // }
+      }
 }
 
       function makeBullet() {
@@ -120,11 +117,7 @@ var Bullet = function(settings) {
 
 
       this.render = function(interactions){
-    //     if(settings.fireBullet && settings.bulletFired === false && settings.bulletMoving === false) {
-    //     makeBullet();
-    // }
     move(interactions);
-
 }
 
 init();
