@@ -6,6 +6,8 @@ var Game = function() {
     settings.playerHP = 100;               // Default player HP
     settings.monsterHP = 100;              // Default monster HP
     settings.monsterSpeed = 0.5;           // The speed of the zombie
+    settings.bossHP = 1000;                // Default boss HP
+    settings.bossSpeed = 0.1;              // Boss Speed
     settings.bulletDamage = 50;            // damage done by each bullet
     settings.fireBullet = false;           // fire the bullet if true
     settings.bulletSpeed = 0.1;            // The speed of the bullet
@@ -30,11 +32,13 @@ var Game = function() {
     var weapon1 = new Weapon(settings);    // first weapon
     var playerHP = new PlayerHP(settings); // Add player HP
     var powerbar = new Powerbar(settings); // Add power bar above player
+    var iglor = new Boss(settings);
     gameObjects[0] = player1;              // Add player to the game objects array
     gameObjects[1] = score1;               // Add scoreboard to the game objects array
     gameObjects[2] = weapon1;              // Add weapon to the game objects array
     gameObjects[3] = playerHP;             // Add player HP to the game objects array
     gameObjects[4] = powerbar;             // Add power bar to the game objects array
+    gameObjects[5] = iglor;                // Add boss to the game objects array
     var frame = 0;                         // Frames since the start of the game
     var timer = 0;                         // Seconds passed since the start of game
     var spawnTimer = Math.random();        // Random spawn time for monster
@@ -146,6 +150,11 @@ var Game = function() {
     function createBullet() {
       gameObjects.push(new Bullet(settings));
       settings.bulletArray = document.getElementsByClassName('bullet');
+    }
+
+    function spawnBoss() {
+      var boss = new Boss(settings);
+      gameObjects.push(boss);
     }
 
     // function createMusic() {
