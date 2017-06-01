@@ -4,7 +4,7 @@ var Player = function(settings) {
     var hpElement = null;
     var currentHpElement = null;
     var playerElement = null;
-    var hitMonster = false;             // Boolean to check if player has collided with monster
+    var hitMonster = false;         // Boolean to check if player has collided with monster
 
     // Collision detection between object and window boundaries
     function wall() {
@@ -35,7 +35,6 @@ var Player = function(settings) {
     function playerWall() {
 
         var playerRect = null;
-        var monsterStats = [];
 
           for(var i=0;i<settings.monsterArray.length;i++) {
           playerRect = playerElement.getBoundingClientRect();
@@ -73,7 +72,7 @@ var Player = function(settings) {
 
       if(settings.walls){
         wall();
-        playerWall(interactions);
+        playerWall();
       }
 
 

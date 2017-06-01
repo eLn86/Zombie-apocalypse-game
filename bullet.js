@@ -3,131 +3,111 @@ var Bullet = function(settings) {
   // Settings
   var bulletElement = null;
   var playerElement = null;
-  var bulletDamage = 50;        //Default bullet damage
-  var bulletidParent = null;
-  this.id;
-  console.log(this.id)
+  var hpElement = null;
+  var currentHpElement = null;
+  var bulletHitMonster = false;
+  // var currentlyMoving = false;
+  this.id = settings.bulletID;
   // variables for weapon aim arc
   var angle = Math.PI/2;
 
   // Collision detection between bullet and ground / monsters / player / window boundaries
   function wall() {
-      console.log('wall is present')
+
       bulletElement = document.getElementById('bullet'+this.id);
       var bulletRect = bulletElement.getBoundingClientRect();
       var w = parseInt(window.innerWidth);
       var h = parseInt(window.innerHeight);
 
-    if(bulletRect.right > w){
-      bulletElement.style.left = (w-bulletRect.width) + 'px';
-      $('#bullet'+this.id).remove();
+    if(bulletRect.right > w) {
+      destroyBullet(this.id);
       settings.bulletMoving = false;
-      settings.bulletFired = false;
-      //settings.bulletID = 0;
-      //this.id=settings.bulletID;
     }
+
+    else if((settings.bulletPower*settings.bulletSpeed)<1) {
+      destroyBullet(this.id);
+      settings.bulletMoving = false;
+      settings.playerHP -= (settings.bulletDamage/10);
+      hpElement = document.getElementById('playerHP');
+      hpElement.innerHTML = Math.floor(settings.playerHP);
+      currentHpElement = document.getElementById('currentHp');
+      currentHpElement.style.width = (settings.playerHP*2) + 'px';
+    }
+
 }
+
+    // set up collision detection between bullets and monsters
+    function bulletWall() {
+
+      for(var i=0;i<settings.monsterObjArray.length;i++) {
+        var bulletRect = null;
+
+        //loop through bullet array and get the bullets and perform collision detection check
+        for(var j=0;j<settings.bulletArray.length;j++) {
+          settings.bulletArray = document.getElementsByClassName('bullet');
+          bulletRect = settings.bulletArray[j].getBoundingClientRect();
+          // Collision detection between bullet and monster
+          if(parseInt(settings.monsterArray[i].style.left) <= bulletRect.right){  //collision conditional
+            $(settings.bulletArray[j]).remove();
+            settings.bulletMoving = false;
+            bulletHitMonster = true;
+          }
+        }
+
+          //loop through monster array and when bullets have collided and reduce monster HP
+          if (bulletHitMonster === true){
+            settings.monsterObjArray[i].monsterHP -= settings.bulletDamage;
+            console.log(settings.monsterObjArray);
+            bulletHitMonster = false;
+            if(settings.monsterObjArray[i].monsterHP <= 0) {
+              $(settings.monsterArray[i]).remove();
+            }
+          }
+        }
+      }
+
 
   function move(interactions) {
 
-    // if(interactions.left){
-    //   bulletElement.style.left = parseInt(bulletElement.style.left)-settings.playerSpeed+"px";
-    // }
-    //
-    // if(interactions.right){
-    //   bulletElement.style.left = parseInt(bulletElement.style.left)+settings.playerSpeed+"px";
-    // }
-
-    // if(interactions.up){
-    //   //move the crosshair up along the x and y axis in an arc
-    //   var playerElement = document.getElementById('player');
-    //   var playerObj = playerElement.getBoundingClientRect();
-    //   var radius = (playerObj.width/2) + 60;
-    //   angle += 0.04;
-    //   var top = (radius*Math.sin(angle));
-    //   var left = (radius*Math.cos(angle));
-    //   bulletElement.style.left = (playerObj.left + (playerObj.width/2)) + left + 'px';
-    //   bulletElement.style.top = (playerObj.top + (playerObj.height/2)) - top + 'px';
-    //
-    //   if(angle > Math.PI/2) {
-    //     bulletElement.style.left = playerObj.left + 50 + 'px';
-    //     bulletElement.style.top = playerObj.top - 60 + 'px';
-    //     angle = Math.PI/2;
-    //   }
-    // }
-    //
-    // if(interactions.down){
-    //   //move the crosshair down along the x and y axis in an arc
-    //   var playerElement = document.getElementById('player');
-    //   var playerObj = playerElement.getBoundingClientRect();
-    //
-    //   var radius = (playerObj.width/2) + 60;
-    //   angle -= 0.04;
-    //   if(angle < 0.2) {
-    //     bulletElement.style.left = playerObj.width/2 + radius + 'px';
-    //     bulletElement.style.top = playerObj.top + (playerObj.height/2) + 'px';
-    //     angle = 0.2;
-    //   }
-    //
-    //   var top = (radius*Math.sin(angle));
-    //   var left = (radius*Math.cos(angle));
-    //   bulletElement.style.left = (playerObj.left + (playerObj.width/2)) + left + 'px';
-    //   bulletElement.style.top = (playerObj.top + (playerObj.height/2)) - top + 'px';
-    // }
-    // if(settings.firstbulletFired) {
-    //   makeBullet();
-    // }
       if (settings.bulletMoving) {
         fireBullet();
         wall();
+        bulletWall();
       }
 }
 
       function makeBullet() {
-      // Create a bullet
+      // Create a bullet and append it to the html body
 
-          this.id = settings.bulletID
-          console.log(this.id)
+          this.id = settings.bulletID;
           this.id++;
-          console.log(this.id)
           settings.bulletID = this.id;
-          console.log("1. makebullet this.id="+this.id);
 
 
       $('body').append("<div id='bullet" + this.id + "' class='bullet'></div>");
       bulletElement = document.getElementById(("bullet"+this.id).toString());
-      playerElement = document.getElementById('player');
-      var playerRect = playerElement.getBoundingClientRect();
+      weaponElement = document.getElementById('weapon');
+      var weaponRect = weaponElement.getBoundingClientRect();
       var bulletRect = bulletElement.getBoundingClientRect();
       bulletElement.style.width = "20px";
       bulletElement.style.height = "20px";
       bulletElement.style.backgroundColor = "black";
-      bulletElement.style.top = (playerRect.top - 60) + 'px';
-      bulletElement.style.left = (playerRect.left + (playerRect.width/2) - (bulletRect.width/2)) + 'px';
+      bulletElement.style.left = ((weaponRect.left + weaponRect.width/2) - bulletRect.width/2) + 'px';
+      bulletElement.style.top = (weaponRect.top + bulletRect.height/2)  + 'px';
       bulletElement.style.display = "inline-block";
       settings.bulletMoving = true;
-      console.log(bulletElement.style.left);
-      console.log('make bullet', this.id, settings.bulletID)
     }
 
       //function which fires the bullet from its rendered position
       function fireBullet() {
       this.id = settings.bulletID;
-      console.log(this.id, settings.bulletID)
-      weaponElement = document.getElementById('weapon');
       bulletElement = document.getElementById(("bullet"+(this.id)).toString());
-      var weaponRect = weaponElement.getBoundingClientRect();
-      //bulletElement.style.top = weaponRect.top + 'px';
-      //bulletElement.style.left = weaponRect.left + 'px';
-      bulletElement.style.display = "inline-block";
-      //settings.fireBullet = false;
-      bulletElement.style.left = parseInt(bulletElement.style.left) + 8 + 'px';
-      // this.id++;
-
+      // var weaponRect = weaponElement.getBoundingClientRect();
+      bulletElement.style.left = (parseInt(bulletElement.style.left) + (settings.bulletPower * settings.bulletSpeed)) + 'px';
     }
 
-      function destroyBullet() {
-
+      function destroyBullet(bulletID) {
+        $('#bullet'+bulletID).remove();
       }
 
       function init() {

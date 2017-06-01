@@ -4,13 +4,9 @@ var Game = function() {
     var settings = {};                     // Containes all game settings
     settings.playerSpeed = 8;              // The speed of the player when moving
     settings.playerHP = 100;               // Default player HP
+    settings.monsterHP = 100;              // Default monster HP
     settings.monsterSpeed = 0.5;           // The speed of the zombie
-    // settings.spawnBullet = function() {    // Global function to spawn bullets
-    //   console.log('created new bullet')
-    //
-    // }
-    settings.firstbulletFired = false;
-    settings.bulletLimit = 5;              // Limit for the amount of bullets at any given amount of time
+    settings.bulletDamage = 50;            // damage done by each bullet
     settings.fireBullet = false;           // fire the bullet if true
     settings.bulletSpeed = 0.1;            // The speed of the bullet
     settings.powerCount = 0;               // Power count for power bar
@@ -22,9 +18,11 @@ var Game = function() {
     settings.spaceBarDepressed = false;    //boolean for power bar show and hide conditional
     settings.bulletID = 0;                 // Bullet ID
     settings.monsterArray = document.getElementsByClassName('monster'); //Store monster objects into array
+    settings.monsterObjArray = [];
     settings.bulletArray = document.getElementsByClassName('bullet');  //Store bullet objects into array
-    settings.bulletMoving = false;          // Don't move the bullet if false
-    settings.bulletFired = false;            // Set to true if bullet has been fired
+    settings.bulletMoving = true;         // Don't move the bullet if false
+
+
     // World settings
     var gameObjects = [];                  // All game objects
     var player1 = new Player(settings);    // The player
@@ -139,7 +137,9 @@ var Game = function() {
   }
 
     function spawnMonster() {
-      gameObjects.push(new Monster(settings));
+      var monster = new Monster(settings);
+      gameObjects.push(monster);
+      settings.monsterObjArray.push(monster);
       settings.monsterArray = document.getElementsByClassName('monster');
     }
 
@@ -154,9 +154,9 @@ var Game = function() {
             gameObjects[i].render(interactions);
           }
 
-      //  if(timer % 3 === 0) {
-      //    spawnMonster();
-      //  }
+       if(timer % 3 === 0) {
+         spawnMonster();
+       }
 
        if(interactions.spaceUp) {
          createBullet();

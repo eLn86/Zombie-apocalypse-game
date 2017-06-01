@@ -2,7 +2,7 @@ var Monster = function(settings) {
 
   // Settings
   var monsterElement = null;
-  var monsterHP = 100;            //Default monster hit points
+  this.monsterHP = settings.monsterHP;   //Default monster hit points
   this.monsterID = settings.monsterID;   //get the id of each monster after created in game.js
 
   // Collision detection between object and window boundaries
