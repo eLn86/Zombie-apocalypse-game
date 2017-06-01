@@ -60,6 +60,7 @@ var Bullet = function(settings) {
             console.log(settings.monsterObjArray);
             bulletHitMonster = false;
             if(settings.monsterObjArray[i].monsterHP <= 0) {
+              settings.monsterObjArray.splice(i,1);
               $(settings.monsterArray[i]).remove();
             }
           }
@@ -69,11 +70,11 @@ var Bullet = function(settings) {
 
   function move(interactions) {
 
-      if (settings.bulletMoving) {
+      // if (settings.bulletMoving) {
         fireBullet();
         wall();
         bulletWall();
-      }
+      // }
 }
 
       function makeBullet() {
@@ -104,6 +105,9 @@ var Bullet = function(settings) {
       bulletElement = document.getElementById(("bullet"+(this.id)).toString());
       // var weaponRect = weaponElement.getBoundingClientRect();
       bulletElement.style.left = (parseInt(bulletElement.style.left) + (settings.bulletPower * settings.bulletSpeed)) + 'px';
+
+      console.log((parseInt(bulletElement.style.left) + (settings.bulletPower * settings.bulletSpeed)));
+
     }
 
       function destroyBullet(bulletID) {
