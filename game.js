@@ -26,7 +26,8 @@ var Game = function() {
     settings.bossTime = false;            // Change music when boss spawns
     settings.timer = 0;                   // Game timer
     settings.killCount = 0;               // Monster kill count
-
+    settings.currentScore = 0;            // Score
+    
     // World settings
     var gameObjects = [];                  // All game objects
     var defaultMusic = document.getElementById('')

@@ -1,6 +1,5 @@
 var Scoreboard = function(settings) {
   var scoreElement = null;
-  var currentScore = 0;
 
   function wall() {
 
@@ -38,7 +37,11 @@ var Scoreboard = function(settings) {
     scoreElement = document.getElementById('scoreboard');
     scoreElement.style.height = '100px';
     scoreElement.style.height = '50px';
-    scoreElement.innerHTML = currentScore;
+    scoreElement.innerHTML = settings.currentScore;
+  }
+
+  function updateScore() {
+  scoreElement.innerHTML = settings.currentScore;
   }
 
   function init(){
@@ -47,6 +50,7 @@ var Scoreboard = function(settings) {
 
   this.render = function(interactions){
     move(interactions);
+    updateScore();
   }
 
   init();

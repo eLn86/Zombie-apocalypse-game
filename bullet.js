@@ -67,6 +67,7 @@ var Bullet = function(settings) {
               settings.monsterObjArray.splice(i,1);
               $(settings.monsterArray[i]).remove();
               settings.killCount++;
+              settings.currentScore += 10;
             }
           }
           if(bulletHitBoss) {
