@@ -4,8 +4,9 @@ var Player = function(settings) {
     var hpElement = null;
     var currentHpElement = null;
     var playerElement = null;
+    var bossElement = null;
     var hitMonster = false;         // Boolean to check if player has collided with monster
-
+    var hitBoss =false;             // Boolean to check if player has collided with boss
     // Collision detection between object and window boundaries
     function wall() {
 
@@ -33,9 +34,7 @@ var Player = function(settings) {
 
     // set up collision detection between player and monsters
     function playerWall() {
-
-        var playerRect = null;
-
+        if(settings.bossTime === false) {
           for(var i=0;i<settings.monsterArray.length;i++) {
           playerRect = playerElement.getBoundingClientRect();
           // Collision detection between player and monster
@@ -49,20 +48,34 @@ var Player = function(settings) {
             currentHpElement.style.width = (settings.playerHP*2) + 'px';
           }
         }
+      }
+        if(settings.bossTime) {
+          playerRect = playerElement.getBoundingClientRect();
+          bossElement = document.getElementById('iglor');
+          var bossRect = bossElement.getBoundingClientRect();
+          if(parseInt(bossElement.style.left) <= playerRect.right) {
+            bossElement.style.left = playerRect.right + 'px';
+            hitBoss = true;
+            settings.playerHP -= 0.2;
+            hpElement = document.getElementById('playerHP');
+            hpElement.innerHTML = Math.floor(settings.playerHP);
+            currentHpElement = document.getElementById('currentHp');
+            currentHpElement.style.width = (settings.playerHP*2) + 'px';
+        }
     }
-
-
+}
     // Move the player around manually
     function move(interactions){
 
       if(interactions.left){
         playerElement.style.left = parseInt(playerElement.style.left)-settings.playerSpeed+"px";
         hitMonster = false;
+        hitBoss = false;
       }
 
       if(interactions.right){
 
-        if(hitMonster) {
+        if(hitMonster || hitBoss) {
           interactions.right = false;
         }
         else{
@@ -74,9 +87,6 @@ var Player = function(settings) {
         wall();
         playerWall();
       }
-
-
-
     }
 
     function createPlayer() {
@@ -85,6 +95,7 @@ var Player = function(settings) {
         playerElement.style.top = '300px';
         playerElement.style.left = '0px';
         playerElement.style.height = '100px';
+        playerElement.style.content = "url('./wireframing/png/male/walk1.png')";
     }
 
     function createPlayerHp() {

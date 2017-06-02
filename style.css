@@ -8,11 +8,21 @@
   #player {
     height: 100px;
     width: 100px;
-    background-color: blue;
     position: absolute;
     top:50px;
     left:50px;
-    border-radius: 50%;
+    background-image: url("wireframing/png/male/walk1.png");
+  }
+
+  #iglor {
+    /*height: 500px;
+    width: 200px;
+    position: absolute;
+    top:50px;
+    left:1200px;
+    background-image: url("wireframing/boss.png");
+    background-repeat: no-repeat;*/
+
   }
 
   #powerBar {

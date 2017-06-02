@@ -3,7 +3,6 @@ var Boss = function(settings) {
   // Settings
   var bossElement = null;
 
-
   // Collision detection between object and window boundaries
   function wall() {
 
@@ -11,24 +10,15 @@ var Boss = function(settings) {
     var w = parseInt(window.innerWidth);
     var h = parseInt(window.innerHeight);
 
-    if(bossRect.bottom > h){
-      bossElement.style.top = (h-bossRect.height) + 'px';
-    }
-
-    if(boss.top < 0){
-      bossElement.style.top = '0px';
-    }
-
     if(bossRect.left < 0){
         bossElement.style.left = '0px';
     }
-
   }
-
   //Move the monster from right to left automatically
   function move() {
+    settings.bossTime = true;
     if(settings.automaticallyMove) {
-        bossElement.style.left = parseInt(bossElement.style.left) - settings.bossSpeed+"px";
+        bossElement.style.left = parseInt(bossElement.style.left) - settings.bossSpeed +"px";
     }
     if(settings.walls) {
     wall();
@@ -37,25 +27,23 @@ var Boss = function(settings) {
 
   function createBoss() {
     // Create the boss asset
-    bossElement = document.createElement('div');
-    bossElement.classList.add("boss");
-    bossElement.setAttribute("id","iglor");
-    var body = document.body;
-    body.append(bossElement);
     bossElement = document.getElementById("iglor");
-    bossElement.style.top = '300px';
-    bossElement.style.left = '1000px';
-    bossElement.style.height = '200px';
-    bossElement.style.height = '100px';
-    bossElement.style.backgroundImage = "url('boss.png')";
+    bossElement.style.position = "absolute";
+    bossElement.style.top = '50px';
+    bossElement.style.left = '1500px';
+    bossElement.style.height = '500px';
+    bossElement.style.width = '200px';
+    bossElement.style.display = "block";
+    bossElement.style.content = "url('./wireframing/boss.png')";
   }
 
   function init() {
-      createBoss();
+    createBoss();
   }
 
-  this.render = function(interactions){
-    move();
+  this.render = function(){
+      move();
+
   }
 
 init();

@@ -3,9 +3,11 @@ var Bullet = function(settings) {
   // Settings
   var bulletElement = null;
   var playerElement = null;
+  var bossElement = null;
   var hpElement = null;
   var currentHpElement = null;
   var bulletHitMonster = false;
+  var bulletHitBoss = false;
   // var currentlyMoving = false;
   this.id = settings.bulletID;
 
@@ -39,7 +41,7 @@ var Bullet = function(settings) {
 
       for(var i=0;i<settings.monsterObjArray.length;i++) {
         var bulletRect = null;
-
+        bossElement = document.getElementById('iglor');
         //loop through bullet array and get the bullets and perform collision detection check
         for(var j=0;j<settings.bulletArray.length;j++) {
           settings.bulletArray = document.getElementsByClassName('bullet');
@@ -50,20 +52,32 @@ var Bullet = function(settings) {
             settings.bulletMoving = false;
             bulletHitMonster = true;
           }
+          if(parseInt(bossElement.style.left) <= bulletRect.right) {
+            $(settings.bulletArray[j]).remove();
+            settings.bulletMoving = false;
+            bulletHitBoss = true;
+          }
         }
 
           //loop through monster array and when bullets have collided and reduce monster HP
-          if (bulletHitMonster === true){
+          if(bulletHitMonster){
             settings.monsterObjArray[i].monsterHP -= settings.bulletDamage;
-            console.log(settings.monsterObjArray);
             bulletHitMonster = false;
             if(settings.monsterObjArray[i].monsterHP <= 0) {
               settings.monsterObjArray.splice(i,1);
               $(settings.monsterArray[i]).remove();
+              settings.killCount++;
             }
+          }
+          if(bulletHitBoss) {
+            settings.bossHP -= settings.bulletDamage;
+            bulletHitBoss = false;
+            if(settings.bossHP <= 0) {
+              $('#iglor').remove();
           }
         }
       }
+    }
 
   function move(interactions) {
 
