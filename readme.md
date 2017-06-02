@@ -18,3 +18,6 @@ Aim weapon down - Down Arrow key
 Aim weapon up - Up Arrow key
 
 Fire Weapon - Press and hold space bar to start power meter and release space bar to fire
+
+
+Link to the game: https://eln86.github.io/Zombie-apocalypse-game/index.html
