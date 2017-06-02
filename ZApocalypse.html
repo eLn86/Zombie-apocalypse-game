@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zombie Apocalypse</title>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div id="scoreboard"></div>
+      </div>
+      <div class="col-md-3">
+        <div id="playerHP"></div>
+      </div>
+      <div class="col-md-3">
+        <div id="hpBar"><div id="currentHp"></div></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="player"></div>
+      <div id="powerBar"></div>
+      <div id="weapon">+</div>
+      <div id="bullet"></div>
+      <div id="iglor"></div>
+    </div>
+  </div>
+
+  <audio id="zombie"><source src="./zombies.mp3" preload = "auto"></audio>
+  <audio id="boss"><source src="./boss.mp3" preload = "auto"></audio>
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="music.js"></script>
+  <script type="text/javascript" src="scoreboard.js"></script>
+  <script type="text/javascript" src="monsters.js"></script>
+  <script type="text/javascript" src="player.js"></script>
+  <script type="text/javascript" src="powerbar.js"></script>
+  <script type="text/javascript" src="playerHP.js"></script>
+  <script type="text/javascript" src="weapons.js"></script>
+  <script type="text/javascript" src="bullet.js"></script>
+  <script type="text/javascript" src="boss.js"></script>
+
+  <script type="text/javascript" src="game.js"></script>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <!-- <audio src="music/boss.mp3" id="boss-music" preload="auto"></audio> -->
+  <!-- <audio src="zombies.mp3" id="default-music" preload="auto"></audio> -->
+
+</body>
+</html>
