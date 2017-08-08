@@ -16,9 +16,8 @@ var Boss = function(settings) {
   }
   //Move the monster from right to left automatically
   function move() {
-    settings.bossTime = true;
     if(settings.automaticallyMove) {
-        bossElement.style.left = parseInt(bossElement.style.left) - settings.bossSpeed +"px";
+          bossElement.style.left = parseInt(bossElement.style.left) - 0.1 + "px";
     }
     if(settings.walls) {
     wall();
@@ -29,8 +28,8 @@ var Boss = function(settings) {
     // Create the boss asset
     bossElement = document.getElementById("iglor");
     bossElement.style.position = "absolute";
-    bossElement.style.top = '50px';
-    bossElement.style.left = '1500px';
+    bossElement.style.top = '20px';
+    bossElement.style.left = '1200px';
     bossElement.style.height = '500px';
     bossElement.style.width = '200px';
     bossElement.style.display = "block";

@@ -6,7 +6,7 @@ var Game = function() {
     settings.playerHP = 100;               // Default player HP
     settings.monsterHP = 100;              // Default monster HP
     settings.monsterSpeed = 0.5;           // The speed of the zombie
-    settings.bossHP = 100;                // Default boss HP
+    settings.bossHP = 300;                // Default boss HP
     settings.bossSpeed = 0.1;              // Boss Speed
     settings.bulletDamage = 50;            // damage done by each bullet
     settings.fireBullet = false;           // fire the bullet if true
@@ -14,7 +14,7 @@ var Game = function() {
     settings.powerCount = 0;               // Power count for power bar
     settings.bulletPower = 0;              // The power of the bullet after space bar is released
     settings.walls = true;                 // The game objects cannot go outside the set boundaries of the screen
-    settings.automaticallyMove = true;             // The object will move by itself
+    settings.automaticallyMove = true;     // The object will move by itself
     settings.godmode = false;              // Debug mode
     settings.monsterID = 1;                // Monster ID
     settings.spaceBarDepressed = false;    //boolean for power bar show and hide conditional
@@ -24,10 +24,12 @@ var Game = function() {
     settings.bulletArray = document.getElementsByClassName('bullet');  //Store bullet objects into array
     settings.bulletMoving = true;         // Don't move the bullet if false
     settings.bossTime = false;            // Change music when boss spawns
+    settings.bossCount = 0;           // Spawn boss when true
     settings.timer = 0;                   // Game timer
     settings.killCount = 0;               // Monster kill count
     settings.currentScore = 0;            // Score
-    
+    settings.gameOver = false;            // Boolean to control game over
+
     // World settings
     var gameObjects = [];                  // All game objects
     var defaultMusic = document.getElementById('')
@@ -158,6 +160,7 @@ var Game = function() {
       settings.bossTime = true;
       var boss = new Boss(settings);
       gameObjects.push(boss);
+      settings.bossCount++;
     }
 
     // else {
@@ -177,18 +180,11 @@ var Game = function() {
           }
 
       setTimeout(function(){
-        if((settings.timer % 3) === 0 && settings.bossTime === false) {
+        if((settings.timer % 3) === 0 && settings.bossTime === false && settings.killCount < 5) {
           spawnMonster();
         }
       }, 3000);
       clearTimeout();
-
-
-      // setTimeout(function(){
-      //     spawnBoss();
-      // }, 5000);
-      // clearTimeout();
-
 
        if(interactions.spaceUp) {
          createBullet();
@@ -199,8 +195,33 @@ var Game = function() {
         console.log("Game Over, the zombies pwned you!");
       }
 
-      if(settings.killCount < 5){
+      if(settings.killCount < 5) {
+        var zombieMusic = document.getElementById('zombie');
         zombieMusic.play();
+      }
+
+      if(settings.killCount === 5) {
+        settings.bossTime = true;
+      }
+
+      if(settings.bossTime && settings.bossCount === 0) {
+        spawnBoss();
+      }
+
+      if(settings.bossTime) {
+        var zombieMusic = document.getElementById('zombie');
+        zombieMusic.pause();
+        var bossMusic = document.getElementById('boss');
+        bossMusic.play();
+      }
+
+      if(settings.gameOver) {
+        settings.bossTime = false;
+        var bossMusic = document.getElementById('boss');
+        bossMusic.pause();
+        var victoryMusic = document.getElementById('victory');
+        victoryMusic.play();
+        victoryMusic.loop = true;
       }
 
       if(settings.killCount > 200) {
@@ -209,7 +230,8 @@ var Game = function() {
 
       frame++;
       settings.timer = frame / 60;
-    }
+
+    } // End of this.render
 
     var self = this; // Add this line
     window.requestAnimFrame = (function(){

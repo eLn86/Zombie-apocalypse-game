@@ -39,27 +39,24 @@ var Bullet = function(settings) {
     // set up collision detection between bullets and monsters
     function bulletWall() {
 
+    // Bullet collision detection for normal monsters
       for(var i=0;i<settings.monsterObjArray.length;i++) {
         var bulletRect = null;
         bossElement = document.getElementById('iglor');
-        //loop through bullet array and get the bullets and perform collision detection check
+        // loop through bullet array and get the bullets and perform collision detection check between bullets and monsters
         for(var j=0;j<settings.bulletArray.length;j++) {
           settings.bulletArray = document.getElementsByClassName('bullet');
           bulletRect = settings.bulletArray[j].getBoundingClientRect();
+
           // Collision detection between bullet and monster
           if(parseInt(settings.monsterArray[i].style.left) <= bulletRect.right){  //collision conditional
             $(settings.bulletArray[j]).remove();
             settings.bulletMoving = false;
             bulletHitMonster = true;
           }
-          if(parseInt(bossElement.style.left) <= bulletRect.right) {
-            $(settings.bulletArray[j]).remove();
-            settings.bulletMoving = false;
-            bulletHitBoss = true;
-          }
-        }
+        } // End of for loop for bullets hitting monsters
 
-          //loop through monster array and when bullets have collided and reduce monster HP
+          // when bullets have collided and reduce monster HP
           if(bulletHitMonster){
             settings.monsterObjArray[i].monsterHP -= settings.bulletDamage;
             bulletHitMonster = false;
@@ -70,15 +67,35 @@ var Bullet = function(settings) {
               settings.currentScore += 10;
             }
           }
-          if(bulletHitBoss) {
-            settings.bossHP -= settings.bulletDamage;
-            bulletHitBoss = false;
-            if(settings.bossHP <= 0) {
-              $('#iglor').remove();
-          }
+
+      } // End of bullet/monsters for loop
+
+      // loop through bullet array and get the bullets and perform collision detection check between bullets and boss
+      for(var j=0;j<settings.bulletArray.length;j++) {
+        bossElement = document.getElementById('iglor');
+        settings.bulletArray = document.getElementsByClassName('bullet');
+        bulletRect = settings.bulletArray[j].getBoundingClientRect();
+
+        if(parseInt(bossElement.style.left) <= bulletRect.right) {
+          $(settings.bulletArray[j]).remove();
+          settings.bulletMoving = false;
+          bulletHitBoss = true;
+        }
+      }  // End of for loop for bullets hitting Boss
+
+      if(bulletHitBoss) {
+        console.log("Remaining Boss HP: ", settings.bossHP);
+        settings.bossHP -= settings.bulletDamage;
+        bulletHitBoss = false;
+        if(settings.bossHP <= 0) {
+          $('#iglor').remove();
+          settings.killCount++;
+          settings.currentScore += 100;
+          settings.gameOver = true;
         }
       }
-    }
+
+    } // End of bulletWall
 
   function move(interactions) {
 
@@ -117,10 +134,7 @@ var Bullet = function(settings) {
       bulletElement = document.getElementById(("bullet"+(this.id)).toString());
       // var weaponRect = weaponElement.getBoundingClientRect();
       bulletElement.style.left = (parseInt(bulletElement.style.left) + (settings.bulletPower * settings.bulletSpeed)) + 'px';
-
-      console.log((parseInt(bulletElement.style.left) + (settings.bulletPower * settings.bulletSpeed)));
-
-    }
+      }
 
       function destroyBullet(bulletID) {
         $('#bullet'+bulletID).remove();
@@ -129,7 +143,6 @@ var Bullet = function(settings) {
       function init() {
       makeBullet();
       }
-
 
       this.render = function(interactions){
     move(interactions);
