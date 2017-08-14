@@ -83,7 +83,7 @@ var Powerbar = function(settings) {
     playerElement = document.getElementById('player');
     var playerRect = playerElement.getBoundingClientRect();
     pbElement.style.top = (playerRect.top - 100) + 'px';
-    pbElement.style.left = playerRect.left + 'px';
+    pbElement.style.left = playerRect.left + '%';
     pbElement.style.width = "0px";
     pbElement.style.height = "30px";
   }

@@ -50,7 +50,7 @@ var Monster = function(settings) {
     $('body').append("<div id='monster" + this.monsterID + "' class='monster'></div>");
     //style='top:300px;left:1200px;height:100px'
     monsterElement = document.getElementById(("monster"+this.monsterID).toString());
-    monsterElement.style.top = '300px'
+    monsterElement.style.top = '60%';
     monsterElement.style.left = '1200px';
     monsterElement.style.height = '100px';
   }

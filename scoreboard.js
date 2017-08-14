@@ -35,13 +35,13 @@ var Scoreboard = function(settings) {
   function createScoreboard() {
     // Create the object asset
     scoreElement = document.getElementById('scoreboard');
-    scoreElement.style.height = '100px';
+    scoreElement.style.width = '200px';
     scoreElement.style.height = '50px';
     scoreElement.innerHTML = settings.currentScore;
   }
 
   function updateScore() {
-  scoreElement.innerHTML = settings.currentScore;
+  scoreElement.innerHTML = "Score: " + settings.currentScore;
   }
 
   function init(){

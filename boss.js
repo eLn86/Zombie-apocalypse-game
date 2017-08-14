@@ -28,7 +28,7 @@ var Boss = function(settings) {
     // Create the boss asset
     bossElement = document.getElementById("iglor");
     bossElement.style.position = "absolute";
-    bossElement.style.top = '20px';
+    bossElement.style.top = '20%';
     bossElement.style.left = '1200px';
     bossElement.style.height = '500px';
     bossElement.style.width = '200px';

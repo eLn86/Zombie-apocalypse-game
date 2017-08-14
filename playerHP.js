@@ -38,7 +38,7 @@ var PlayerHP = function (settings) {
       hpElement = document.getElementById('playerHP');
       hpElement.style.width = '100px';
       hpElement.style.height = '50px';
-      hpElement.innerHTML = settings.playerHP;
+      hpElement.innerHTML = "HP: " + settings.playerHP;
     }
 
     function init(){

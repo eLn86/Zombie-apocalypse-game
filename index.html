@@ -9,8 +9,18 @@
 </head>
 
 <body>
-
-  <div class="container">
+  <div id="startScreen">
+    <button id="startButton"></button>
+  </div>
+  <div id="winScreen">
+    <div id="winBox">
+      <h3 id="gameOverText">Congratulations! You have defeated all the zombies!</h3>
+      <h3 id="winScore"></h3>
+      <button id="playAgainButton" class="btn btn-success">Play Again</button>
+      <button id="goBackToStartButton" class="btn btn-danger">Go back to start screen</button>
+    </div>
+  </div>
+  <div class="container gameContainer">
     <div class="row">
       <div class="col-md-6">
         <div id="scoreboard"></div>
@@ -35,6 +45,8 @@
   <audio id="zombie" src="./zombies.mp3" preload= "auto" type="audio/mpeg"></audio>
   <audio id="boss" src="./boss.mp3" preload= "auto" type="audio/mpeg"></audio>
   <audio id="victory" src="./victory.mp3" preload= "auto" type="audio/mpeg"></audio>
+  <audio id="zombieSound" src="./zombie-sound.mp3" preload= "auto" type="audio/mpeg"></audio>
+  <audio id="startMusic" src="./start-music.mp3" preload= "auto" type="audio/mpeg"></audio>
   <script type="text/javascript" src="jquery.min.js"></script>
   <script type="text/javascript" src="music.js"></script>
   <script type="text/javascript" src="scoreboard.js"></script>

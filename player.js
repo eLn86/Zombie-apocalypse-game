@@ -92,7 +92,7 @@ var Player = function(settings) {
     function createPlayer() {
         // Create the object asset
         playerElement = document.getElementById('player');
-        playerElement.style.top = '300px';
+        playerElement.style.top = '60%';
         playerElement.style.left = '0px';
         playerElement.style.height = '100px';
         playerElement.style.content = "url('./wireframing/png/male/walk1.png')";

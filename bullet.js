@@ -38,7 +38,7 @@ var Bullet = function(settings) {
 
     // set up collision detection between bullets and monsters
     function bulletWall() {
-
+    if(!settings.bossTime && !settings.gameOverVictory && settings.bulletArray.length !== 0)
     // Bullet collision detection for normal monsters
       for(var i=0;i<settings.monsterObjArray.length;i++) {
         var bulletRect = null;
@@ -70,36 +70,37 @@ var Bullet = function(settings) {
 
       } // End of bullet/monsters for loop
 
-      // loop through bullet array and get the bullets and perform collision detection check between bullets and boss
-      for(var j=0;j<settings.bulletArray.length;j++) {
-        bossElement = document.getElementById('iglor');
-        settings.bulletArray = document.getElementsByClassName('bullet');
-        bulletRect = settings.bulletArray[j].getBoundingClientRect();
+      if(settings.bossTime && settings.bulletArray.length !== 0) {
+        // loop through bullet array and get the bullets and perform collision detection check between bullets and boss
+        for(var j=0;j<settings.bulletArray.length;j++) {
+          bossElement = document.getElementById('iglor');
+          settings.bulletArray = document.getElementsByClassName('bullet');
+          bulletRect = settings.bulletArray[j].getBoundingClientRect();
 
-        if(parseInt(bossElement.style.left) <= bulletRect.right) {
-          $(settings.bulletArray[j]).remove();
-          settings.bulletMoving = false;
-          bulletHitBoss = true;
-        }
-      }  // End of for loop for bullets hitting Boss
+          if(parseInt(bossElement.style.left) <= bulletRect.right) {
+            $(settings.bulletArray[j]).remove();
+            settings.bulletMoving = false;
+            bulletHitBoss = true;
+          }
+        }  // End of for loop for bullets hitting Boss
 
-      if(bulletHitBoss) {
-        console.log("Remaining Boss HP: ", settings.bossHP);
-        settings.bossHP -= settings.bulletDamage;
-        bulletHitBoss = false;
-        if(settings.bossHP <= 0) {
-          $('#iglor').remove();
-          settings.killCount++;
-          settings.currentScore += 100;
-          settings.gameOver = true;
+        if(bulletHitBoss) {
+          console.log("Remaining Boss HP: ", settings.bossHP);
+          settings.bossHP -= settings.bulletDamage;
+          bulletHitBoss = false;
+          if(settings.bossHP <= 0) {
+            $('#iglor').remove();
+            settings.killCount++;
+            settings.currentScore += 100;
+            settings.gameOverVictory = true;
+          }
         }
       }
-
     } // End of bulletWall
 
   function move(interactions) {
 
-      if (settings.bulletMoving) {
+      if (settings.bulletMoving && !settings.gameOverVictory) {
         fireBullet();
         wall();
         bulletWall();

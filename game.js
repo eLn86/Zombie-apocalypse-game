@@ -2,6 +2,8 @@ var Game = function() {
 
     // Game settings
     var settings = {};                     // Containes all game settings
+    settings.startScreen = true;
+    settings.gameStart = false;
     settings.playerSpeed = 8;              // The speed of the player when moving
     settings.playerHP = 100;               // Default player HP
     settings.monsterHP = 100;              // Default monster HP
@@ -24,16 +26,16 @@ var Game = function() {
     settings.bulletArray = document.getElementsByClassName('bullet');  //Store bullet objects into array
     settings.bulletMoving = true;         // Don't move the bullet if false
     settings.bossTime = false;            // Change music when boss spawns
-    settings.bossCount = 0;           // Spawn boss when true
+    settings.bossCount = 0;               // Spawn boss when true
     settings.timer = 0;                   // Game timer
     settings.killCount = 0;               // Monster kill count
     settings.currentScore = 0;            // Score
-    settings.gameOver = false;            // Boolean to control game over
+    settings.gameOverVictory = false;     // Boolean to control game over win
+    settings.gameOverLoss = false;     // Boolean to control game over lose
+    settings.winScreen = false;
 
     // World settings
     var gameObjects = [];                  // All game objects
-    var defaultMusic = document.getElementById('')
-    var bossMusic = document.getElementById
     var player1 = new Player(settings);    // The player
     var score1 = new Scoreboard(settings); // Scoreboard
     var weapon1 = new Weapon(settings);    // first weapon
@@ -64,6 +66,66 @@ var Game = function() {
 
     // Setup event listeners
     function setupEvents() {
+      document.getElementById('startButton').addEventListener("click", function() {
+        var gameContainer = document.getElementsByClassName('gameContainer');
+        var startScreen = document.getElementById('startScreen');
+        var zombieSound = document.getElementById('zombieSound');
+        zombieSound.play();
+
+        setTimeout(function(){
+          zombieSound.pause();
+          startScreen.style.display = 'none';
+          settings.gameStart = true;
+          settings.startScreen = false;
+          var startMusic = document.getElementById('startMusic');
+          startMusic.pause();
+          var player = document.getElementById('player');
+          var scoreboard = document.getElementById('scoreboard');
+          var playerHP = document.getElementById('playerHP');
+          var hpBar = document.getElementById('hpBar');
+          var weapon = document.getElementById('weapon');
+          player.style.opacity = '100';
+          scoreboard.style.display = 'flex';
+          playerHP.style.display = 'flex';
+          hpBar.style.display = 'block';
+          weapon.style.display = 'block';
+        },1800);
+      })
+
+      document.getElementById('playAgainButton').addEventListener("click", function() {
+          settings.gameOverVictory = false;
+          settings.currentScore = 0;
+          settings.playerHP = 100;
+          settings.gameStart = true;
+          var victoryMusic = document.getElementById('victory');
+          victoryMusic.pause();
+          var winScreen = document.getElementById('winScreen');
+          winScreen.style.display = 'none';
+      })
+
+      document.getElementById('goBackToStartButton').addEventListener("click", function() {
+          settings.gameOverVictory = false;
+          settings.currentScore = 0;
+          settings.playerHP = 100;
+          var victoryMusic = document.getElementById('victory');
+          victoryMusic.pause();
+          var winScreen = document.getElementById('winScreen');
+          winScreen.style.display = 'none';
+          var player = document.getElementById('player');
+          var scoreboard = document.getElementById('scoreboard');
+          var playerHP = document.getElementById('playerHP');
+          var hpBar = document.getElementById('hpBar');
+          var weapon = document.getElementById('weapon');
+          player.style.opacity = '0';
+          scoreboard.style.display = 'none';
+          playerHP.style.display = 'none';
+          hpBar.style.display = 'none';
+          weapon.style.display = 'none';
+          var startScreen = document.getElementById('startScreen');
+          startScreen.style.display = 'flex';
+          settings.startScreen = true;
+      })
+
       document.addEventListener('keyup', function(event){
         var keyName = event.key;
 
@@ -175,61 +237,81 @@ var Game = function() {
 
     // The render function. It will be called 60/sec
     this.render = function(){
+
+      if(settings.startScreen) {
+        var startMusic = document.getElementById('startMusic');
+        startMusic.play();
+        startMusic.loop = true;
+      }
+
+      else {
         for(var i=0; i < gameObjects.length; i++){
             gameObjects[i].render(interactions);
           }
 
-      setTimeout(function(){
-        if((settings.timer % 3) === 0 && settings.bossTime === false && settings.killCount < 5) {
-          spawnMonster();
-        }
-      }, 3000);
-      clearTimeout();
+          setTimeout(function(){
+            if((settings.timer % 3) === 0 && settings.bossTime === false && settings.killCount < 5 && settings.startScreen === false && settings.gameStart) {
+              spawnMonster();
+            }
+          }, 3000);
+          clearTimeout();
 
-       if(interactions.spaceUp) {
-         createBullet();
-         interactions.spaceUp = false;
-       }
+           if(interactions.spaceUp) {
+             createBullet();
+             interactions.spaceUp = false;
+           }
 
-      if(settings.playerHP <= 0) {
-        console.log("Game Over, the zombies pwned you!");
+          if(settings.playerHP <= 0) {
+            console.log("Game Over, the zombies pwned you!");
+          }
+
+          if(settings.killCount < 5 && settings.startScreen === false && settings.gameStart) {
+            var zombieMusic = document.getElementById('zombie');
+            zombieMusic.play();
+          }
+
+          if(settings.killCount === 5) {
+            settings.bossTime = true;
+          }
+
+          if(settings.bossTime && settings.bossCount === 0) {
+            spawnBoss();
+          }
+
+          if(settings.bossTime) {
+            var zombieMusic = document.getElementById('zombie');
+            zombieMusic.pause();
+            var bossMusic = document.getElementById('boss');
+            bossMusic.play();
+          }
+
+          if(settings.gameOverVictory) {
+            settings.gameStart = false;
+            settings.bossTime = false;
+            var bossMusic = document.getElementById('boss');
+            bossMusic.pause();
+            var victoryMusic = document.getElementById('victory');
+            victoryMusic.play();
+            victoryMusic.loop = true;
+            settings.bossCount = 0;
+            settings.killCount = 0;
+            frame = 0;
+            settings.timer = 0;
+            settings.bossHP = 300;
+            settings.bulletID = 0;
+            var winScreen = document.getElementById('winScreen');
+            winScreen.style.display = 'flex';
+            var winScore = document.getElementById('winScore');
+            winScore.innerHTML = 'Your Score: ' + settings.currentScore;
+          }
+
+          if(settings.gameOverVictory === false) {
+            frame++;
+            settings.timer = frame / 60;
+          }
       }
 
-      if(settings.killCount < 5) {
-        var zombieMusic = document.getElementById('zombie');
-        zombieMusic.play();
-      }
 
-      if(settings.killCount === 5) {
-        settings.bossTime = true;
-      }
-
-      if(settings.bossTime && settings.bossCount === 0) {
-        spawnBoss();
-      }
-
-      if(settings.bossTime) {
-        var zombieMusic = document.getElementById('zombie');
-        zombieMusic.pause();
-        var bossMusic = document.getElementById('boss');
-        bossMusic.play();
-      }
-
-      if(settings.gameOver) {
-        settings.bossTime = false;
-        var bossMusic = document.getElementById('boss');
-        bossMusic.pause();
-        var victoryMusic = document.getElementById('victory');
-        victoryMusic.play();
-        victoryMusic.loop = true;
-      }
-
-      if(settings.killCount > 200) {
-        window.alert("You have killed all the zombies! The world is safe, for now....");
-      }
-
-      frame++;
-      settings.timer = frame / 60;
 
     } // End of this.render
 
